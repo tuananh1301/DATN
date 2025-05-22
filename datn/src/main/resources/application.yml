@@ -7,9 +7,18 @@ spring:
     password: quiPIgINaBLe
     driver-class-name: org.mariadb.jdbc.Driver
 
+server:
+  port: 8080
+  servlet:
+    context-path: /lily-shop
   jpa:
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect
+
+logging:
+  level:
+    org.springframework: INFO
+    com.example: INFO
