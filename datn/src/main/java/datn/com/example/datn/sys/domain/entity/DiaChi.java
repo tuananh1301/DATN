@@ -1,4 +1,4 @@
-package datn.com.example.datn.Entity;
+package datn.com.example.datn.sys.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

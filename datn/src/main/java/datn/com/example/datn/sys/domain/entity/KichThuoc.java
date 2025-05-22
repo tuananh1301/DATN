@@ -1,4 +1,4 @@
-package datn.com.example.datn.Entity;
+package datn.com.example.datn.sys.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,17 +10,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "phuong_thuc_van_chuyen")
-public class PhuongThucVanChuyen {
+@Table(name = "kich_thuoc")
+public class KichThuoc {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "ten_phuong_thuc", length = 100)
-    private String tenPhuongThuc;
-
-    @Column(name = "service_id")
-    private Integer serviceId;
+    @Column(name = "ten_kich_thuoc", length = 50)
+    private String tenKichThuoc;
 
     @Column(name = "trang_thai")
     private Boolean trangThai;
