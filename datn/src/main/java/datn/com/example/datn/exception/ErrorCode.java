@@ -26,7 +26,6 @@ public enum ErrorCode {
     private final String message;
     private final HttpStatus httpStatus;
 
-    // Constructor mặc định nếu không truyền HttpStatus
     ErrorCode(int code, String message) {
         this(code, message, HttpStatus.BAD_REQUEST);
     }
