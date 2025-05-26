@@ -1,8 +1,9 @@
-package datn.com.example.datn.sys.domain.entity;
+package datn.com.example.datn.sys.domain.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -32,5 +33,13 @@ public class ThanhToan {
 
     @Column(name = "ngay_thanh_toan")
     private Instant ngayThanhToan;
+
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "ngay_tao")
+    private Instant ngayTao;
+
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "ngay_sua")
+    private Instant ngaySua;
 
 }

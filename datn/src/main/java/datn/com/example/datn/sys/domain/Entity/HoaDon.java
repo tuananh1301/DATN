@@ -1,6 +1,7 @@
-package datn.com.example.datn.sys.domain.entity;
+package datn.com.example.datn.sys.domain.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
@@ -15,6 +16,7 @@ import java.time.Instant;
 @Table(name = "hoa_don")
 public class HoaDon {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -24,12 +26,14 @@ public class HoaDon {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "id_nguoi_dung")
-    private NguoiDung idNguoiDung;
+    @JoinColumn(name = "id_nhan_vien")
+    private NhanVien idNhanVien;
 
+    @Size(max = 100)
     @Column(name = "ma_hoa_don", length = 100)
     private String maHoaDon;
 
+    @Size(max = 50)
     @Column(name = "loai_don", length = 50)
     private String loaiDon;
 
@@ -37,9 +41,11 @@ public class HoaDon {
     @Column(name = "ghi_chu")
     private String ghiChu;
 
+    @Size(max = 100)
     @Column(name = "ho_ten_nguoi_nhan", length = 100)
     private String hoTenNguoiNhan;
 
+    @Size(max = 20)
     @Column(name = "so_dien_thoai", length = 20)
     private String soDienThoai;
 
@@ -60,6 +66,9 @@ public class HoaDon {
 
     @Column(name = "ngay_tao")
     private Instant ngayTao;
+
+    @Column(name = "ngay_sua")
+    private Instant ngaySua;
 
     @Column(name = "ngay_thanh_toan")
     private Instant ngayThanhToan;

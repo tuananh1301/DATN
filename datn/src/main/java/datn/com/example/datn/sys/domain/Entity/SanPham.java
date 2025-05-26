@@ -1,25 +1,32 @@
-package datn.com.example.datn.sys.domain.entity;
+package datn.com.example.datn.sys.domain.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+
+import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "san_pham")
 public class SanPham {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "ma_san_pham", length = 100)
+    @Column(name = "ma_san_pham")
     private String maSanPham;
 
     @Column(name = "ten_san_pham")
     private String tenSanPham;
 
-    @Lob
     @Column(name = "mo_ta")
     private String moTa;
 
@@ -37,5 +44,13 @@ public class SanPham {
 
     @Column(name = "trang_thai")
     private Boolean trangThai;
+
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "ngay_tao")
+    private Instant ngayTao;
+
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "ngay_sua")
+    private Instant ngaySua;
 
 }

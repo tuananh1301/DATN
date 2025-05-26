@@ -1,16 +1,22 @@
-package datn.com.example.datn.sys.domain.entity;
+package datn.com.example.datn.sys.domain.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "san_pham_chi_tiet")
 public class SanPhamChiTiet {
     @Id
@@ -38,5 +44,13 @@ public class SanPhamChiTiet {
 
     @Column(name = "trang_thai")
     private Boolean trangThai;
+
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "ngay_tao")
+    private Instant ngayTao;
+
+    @ColumnDefault("current_timestamp()")
+    @Column(name = "ngay_sua")
+    private Instant ngaySua;
 
 }
