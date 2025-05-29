@@ -29,7 +29,4 @@ public class GioHang {
     @Column(name = "ngay_sua")
     private Instant ngaySua;
 
-    @Column(name = "tong_tien")
-    private Float tongTien;
-
 }

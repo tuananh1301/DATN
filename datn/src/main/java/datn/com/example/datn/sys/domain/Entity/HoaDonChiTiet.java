@@ -32,8 +32,8 @@ public class HoaDonChiTiet {
     @Column(name = "so_luong")
     private Integer soLuong;
 
-    @Column(name = "don_gia", precision = 12, scale = 2)
-    private BigDecimal donGia;
+    @Column(name = "don_gia")
+    private Double donGia;
 
     @Column(name = "trang_thai")
     private Boolean trangThai;

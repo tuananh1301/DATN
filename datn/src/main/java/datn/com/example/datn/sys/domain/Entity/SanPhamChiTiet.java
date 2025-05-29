@@ -26,21 +26,21 @@ public class SanPhamChiTiet {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_san_pham")
-    private SanPham idSanPham;
+    private SanPham sanPham;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_kich_thuoc")
-    private KichThuoc idKichThuoc;
+    private KichThuoc kichThuoc;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_mau_sac")
-    private MauSac idMauSac;
+    private MauSac mauSac;
 
     @Column(name = "so_luong")
     private Integer soLuong;
 
-    @Column(name = "gia_ban", precision = 12, scale = 2)
-    private BigDecimal giaBan;
+    @Column(name = "gia_ban")
+    private Double giaBan;
 
     @Column(name = "trang_thai")
     private Boolean trangThai;

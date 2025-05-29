@@ -8,4 +8,5 @@ import java.util.List;
 public interface SanPhamChiTietService {
     List<HienThiSanPhamDto> homeSanPham();
     List<HienThiSanPhamDto> getSanPhamByIdDanhMuc(Integer idDanhMuc);
+    List<HienThiSanPhamDto> getSanPhamByIdSanPham(Integer idSanPham);
 }

@@ -28,8 +28,8 @@ public class ThanhToan {
     @JoinColumn(name = "id_hinh_thuc_thanh_toan")
     private HinhThucThanhToan idHinhThucThanhToan;
 
-    @Column(name = "so_tien", precision = 12, scale = 2)
-    private BigDecimal soTien;
+    @Column(name = "so_tien")
+    private Double soTien;
 
     @Column(name = "ngay_thanh_toan")
     private Instant ngayThanhToan;
