@@ -5,47 +5,54 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
+import java.util.Set;
 
-@Getter
-@Setter
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "nguoi_dung")
 public class NguoiDung {
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    Integer id;
+
+    @Column(name = "fullname")
+    String fullName;
 
     @Size(max = 100)
     @Column(name = "ten_dang_nhap", length = 100)
-    private String tenDangNhap;
+    String tenDangNhap;
 
     @Size(max = 255)
     @Column(name = "mat_khau")
-    private String matKhau;
+    String matKhau;
 
     @Size(max = 20)
     @Column(name = "so_dien_thoai", length = 20)
-    private String soDienThoai;
+    String soDienThoai;
 
     @Size(max = 250)
     @Column(name = "email", length = 250)
-    private String email;
+    String email;
 
     @Size(max = 50)
     @Column(name = "vai_tro", length = 50)
-    private String vaiTro;
+    Set<String> vaiTro;
 
     @Column(name = "trang_thai")
-    private Boolean trangThai;
+    Boolean trangThai;
 
     @Column(name = "ngay_tao")
-    private Instant ngayTao;
+    Instant ngayTao;
 
     @Column(name = "ngay_sua")
-    private Instant ngaySua;
+    Instant ngaySua;
 
 }
