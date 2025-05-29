@@ -6,6 +6,10 @@ spring:
     username: root
     password: quiPIgINaBLe
     driver-class-name: org.mariadb.jdbc.Driver
+jwt:
+  signerKey: QbX+8UKkMR2hh+MXEJGIHnjfzc435e5L4pSU8ERIR1Bdh7Vj0lnl7WRsV0Cjq4OL
+  valid-duration: 3600
+  refreshable-duration: 36000
 
 server:
   port: 8080
@@ -22,3 +26,10 @@ logging:
   level:
     org.springframework: INFO
     com.example: INFO
+security:
+  public-endpoints:
+    - /users/add
+    - /auth/token
+    - /auth/logout
+    - /auth/refresh
+    - /auth/introspect
