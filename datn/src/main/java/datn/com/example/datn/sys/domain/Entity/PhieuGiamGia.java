@@ -34,14 +34,14 @@ public class PhieuGiamGia {
     @Column(name = "loai_giam", length = 50)
     private String loaiGiam;
 
-    @Column(name = "gia_tri_giam", precision = 10, scale = 2)
-    private BigDecimal giaTriGiam;
+    @Column(name = "gia_tri_giam")
+    private Double giaTriGiam;
 
-    @Column(name = "dieu_kien_giam", precision = 12, scale = 2)
-    private BigDecimal dieuKienGiam;
+    @Column(name = "dieu_kien_giam")
+    private Double dieuKienGiam;
 
-    @Column(name = "giam_toi_da", precision = 12, scale = 2)
-    private BigDecimal giamToiDa;
+    @Column(name = "giam_toi_da")
+    private Double giamToiDa;
 
     @Column(name = "so_luong")
     private Integer soLuong;

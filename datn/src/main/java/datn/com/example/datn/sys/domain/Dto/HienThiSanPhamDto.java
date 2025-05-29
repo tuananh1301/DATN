@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 public class HienThiSanPhamDto {
     Integer id;
     String tenSanPham;
-    BigDecimal giaBan;
+    Double giaBan;
     String duongDanHinhAnh;
-
 }

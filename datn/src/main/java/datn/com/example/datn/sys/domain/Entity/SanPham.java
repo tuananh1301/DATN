@@ -32,15 +32,15 @@ public class SanPham {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_danh_muc")
-    private DanhMuc idDanhMuc;
+    private DanhMuc danhMuc;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_chat_lieu")
-    private ChatLieu idChatLieu;
+    private ChatLieu chatLieu;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_xuat_xu")
-    private XuatXu idXuatXu;
+    private XuatXu xuatXu;
 
     @Column(name = "trang_thai")
     private Boolean trangThai;
