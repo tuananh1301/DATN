@@ -1,11 +1,12 @@
 package datn.com.example.datn.sys.domain.Mapper;
 
-import datn.com.example.datn.sys.domain.Dto.NguoiDungDto;
+import datn.com.example.datn.sys.domain.Dto.Request.NguoiDungReq;
+import datn.com.example.datn.sys.domain.Dto.Response.NguoiDungRes;
 import datn.com.example.datn.sys.domain.Entity.NguoiDung;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface NguoiDungMapper {
-    NguoiDung toNguoiDung(NguoiDungDto nguoiDungDto);
-    NguoiDungDto toNguoiDungDto(NguoiDung nguoiDung);
+    NguoiDung toNguoiDung(NguoiDungReq nguoiDungReq);
+    NguoiDungRes toNguoiDungDto(NguoiDung nguoiDung);
 }

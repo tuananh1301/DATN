@@ -1,7 +1,8 @@
 package datn.com.example.datn.sys.domain.Controller;
 
-import datn.com.example.datn.sys.domain.Dto.ApiResponse;
-import datn.com.example.datn.sys.domain.Dto.NguoiDungDto;
+import datn.com.example.datn.sys.domain.Dto.Request.NguoiDungReq;
+import datn.com.example.datn.sys.domain.Dto.Response.ApiResponse;
+import datn.com.example.datn.sys.domain.Dto.Response.NguoiDungRes;
 import datn.com.example.datn.sys.domain.Service.NguoiDungService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class NguoiDungController {
     NguoiDungService nguoiDungService;
 
-    @PostMapping("/add")
-    public ApiResponse<NguoiDungDto> create(@RequestBody NguoiDungDto nguoiDungDto) {
-        return ApiResponse.<NguoiDungDto>builder().result(nguoiDungService.create(nguoiDungDto)).build();
+    @PostMapping("/addCustomer")
+    public ApiResponse<NguoiDungRes> createCustomer(@RequestBody NguoiDungReq nguoiDungReq) {
+        return ApiResponse.<NguoiDungRes>builder().result(nguoiDungService.createCustomer(nguoiDungReq)).build();
+    }
+    @PostMapping("/addStaff")
+    public ApiResponse<NguoiDungRes> createStaff(@RequestBody NguoiDungReq nguoiDungReq) {
+        return ApiResponse.<NguoiDungRes>builder().result(nguoiDungService.createStaff(nguoiDungReq)).build();
     }
 }
