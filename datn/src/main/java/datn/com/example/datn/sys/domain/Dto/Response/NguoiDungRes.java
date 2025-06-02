@@ -1,23 +1,22 @@
-package datn.com.example.datn.sys.domain.Dto;
+package datn.com.example.datn.sys.domain.Dto.Response;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Set;
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NguoiDungDto {
-    Integer id;
+public class NguoiDungRes {
     String fullName;
     String tenDangNhap;
     String matKhau;
+    LocalDate ngaySinh;
+    Boolean gioiTinh;
     String soDienThoai;
     String email;
     Set<String> vaiTro;

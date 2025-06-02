@@ -1,4 +1,4 @@
-package datn.com.example.datn.sys.domain.Dto;
+package datn.com.example.datn.sys.domain.Dto.Request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,8 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Authentication {
-    String token;
-    String refreshToken;
-    Boolean authenticated;
+public class AuthenticationReq {
+    String tenDangNhap;
+    String matKhau;
 }

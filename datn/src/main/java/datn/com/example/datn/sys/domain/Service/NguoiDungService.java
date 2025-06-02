@@ -1,7 +1,9 @@
 package datn.com.example.datn.sys.domain.Service;
 
-import datn.com.example.datn.sys.domain.Dto.NguoiDungDto;
+import datn.com.example.datn.sys.domain.Dto.Request.NguoiDungReq;
+import datn.com.example.datn.sys.domain.Dto.Response.NguoiDungRes;
 
 public interface NguoiDungService {
-    NguoiDungDto create(NguoiDungDto nguoiDungDto);
+    NguoiDungRes createCustomer(NguoiDungReq nguoiDungReq);
+    NguoiDungRes createStaff(NguoiDungReq nguoiDungReq);
 }
