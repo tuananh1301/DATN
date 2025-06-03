@@ -1,5 +1,6 @@
 package datn.com.example.datn.sys.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Setter
 @Entity
 @Table(name = "hinh_anh")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class HinhAnh {
     @Id
     @Column(name = "id", nullable = false)

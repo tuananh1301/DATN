@@ -1,5 +1,6 @@
 package datn.com.example.datn.sys.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +14,10 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "hoa_don")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class HoaDon {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -24,8 +27,8 @@ public class HoaDon {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "id_nguoi_dung")
-    private NguoiDung idNguoiDung;
+    @JoinColumn(name = "id_nhan_vien")
+    private NguoiDung idNhanVien;
 
     @Column(name = "ma_hoa_don", length = 100)
     private String maHoaDon;
