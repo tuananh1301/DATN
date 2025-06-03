@@ -58,11 +58,11 @@ public class HoaDon {
     @JoinColumn(name = "id_phuong_thuc_van_chuyen")
     private PhuongThucVanChuyen idPhuongThucVanChuyen;
 
-    @Column(name = "phi_van_chuyen")
-    private Double phiVanChuyen;
+    @Column(name = "phi_van_chuyen", precision = 12, scale = 2)
+    private BigDecimal phiVanChuyen;
 
-    @Column(name = "tong_tien")
-    private Double tongTien;
+    @Column(name = "tong_tien", precision = 12, scale = 2)
+    private BigDecimal tongTien;
 
     @Column(name = "ngay_tao")
     private Instant ngayTao;
@@ -80,5 +80,9 @@ public class HoaDon {
 
     @Column(name = "trang_thai")
     private Boolean trangThai;
+
+    @Size(max = 400)
+    @Column(name = "dia_chi", length = 400)
+    private String diaChi;
 
 }

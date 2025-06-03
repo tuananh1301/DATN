@@ -1,6 +1,7 @@
 package datn.com.example.datn.sys.domain.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -16,6 +17,7 @@ import java.time.Instant;
 @Table(name = "thanh_toan")
 public class ThanhToan {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -24,12 +26,8 @@ public class ThanhToan {
     @JoinColumn(name = "id_hoa_don")
     private HoaDon idHoaDon;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_hinh_thuc_thanh_toan")
-    private HinhThucThanhToan idHinhThucThanhToan;
-
-    @Column(name = "so_tien")
-    private Double soTien;
+    @Column(name = "so_tien", precision = 12, scale = 2)
+    private BigDecimal soTien;
 
     @Column(name = "ngay_thanh_toan")
     private Instant ngayThanhToan;
@@ -41,5 +39,9 @@ public class ThanhToan {
     @ColumnDefault("current_timestamp()")
     @Column(name = "ngay_sua")
     private Instant ngaySua;
+
+    @Size(max = 100)
+    @Column(name = "ten_hinh_thuc_thanh_toan", length = 100)
+    private String tenHinhThucThanhToan;
 
 }
