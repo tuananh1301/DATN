@@ -1,16 +1,14 @@
-package datn.com.example.datn.sys.domain.Dto;
+package datn.com.example.datn.sys.domain.Dto.Response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.math.BigDecimal;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class HienThiSanPhamDto {
+public class HienThiSanPhamRes {
     Integer id;
     String tenSanPham;
     Double giaBan;

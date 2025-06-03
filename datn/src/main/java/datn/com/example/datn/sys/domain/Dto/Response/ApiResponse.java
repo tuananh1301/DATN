@@ -1,4 +1,4 @@
-package datn.com.example.datn.sys.domain.Dto;
+package datn.com.example.datn.sys.domain.Dto.Response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

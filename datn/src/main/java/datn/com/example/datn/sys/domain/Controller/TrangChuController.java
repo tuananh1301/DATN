@@ -1,7 +1,7 @@
 package datn.com.example.datn.sys.domain.Controller;
 
-import datn.com.example.datn.sys.domain.Dto.ApiResponse;
-import datn.com.example.datn.sys.domain.Dto.HienThiSanPhamDto;
+import datn.com.example.datn.sys.domain.Dto.Response.ApiResponse;
+import datn.com.example.datn.sys.domain.Dto.Response.HienThiSanPhamRes;
 import datn.com.example.datn.sys.domain.Service.SanPhamChiTietService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +21,13 @@ public class TrangChuController {
     SanPhamChiTietService sanPhamChiTietService;
 
     @GetMapping("/sanpham")
-    public ApiResponse<List<HienThiSanPhamDto>> trangChu() {
-        return ApiResponse.<List<HienThiSanPhamDto>>builder().result(sanPhamChiTietService.homeSanPham()).build();
+    public ApiResponse<List<HienThiSanPhamRes>> trangChu() {
+        return ApiResponse.<List<HienThiSanPhamRes>>builder().result(sanPhamChiTietService.homeSanPham()).build();
     }
 
     @GetMapping("/getByDanhMuc/{id}")
-    public ApiResponse<List<HienThiSanPhamDto>> getByDanhMuc(@PathVariable Integer id) {
-        return ApiResponse.<List<HienThiSanPhamDto>>builder().result(sanPhamChiTietService.getSanPhamByIdDanhMuc(id)).build();
+    public ApiResponse<List<HienThiSanPhamRes>> getByDanhMuc(@PathVariable Integer id) {
+        return ApiResponse.<List<HienThiSanPhamRes>>builder().result(sanPhamChiTietService.getSanPhamByIdDanhMuc(id)).build();
     }
 
 }

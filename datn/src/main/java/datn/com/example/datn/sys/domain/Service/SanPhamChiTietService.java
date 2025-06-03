@@ -1,12 +1,11 @@
 package datn.com.example.datn.sys.domain.Service;
 
-import datn.com.example.datn.sys.domain.Dto.HienThiSanPhamDto;
-import datn.com.example.datn.sys.domain.Entity.SanPhamChiTiet;
+import datn.com.example.datn.sys.domain.Dto.Response.HienThiSanPhamRes;
 
 import java.util.List;
 
 public interface SanPhamChiTietService {
-    List<HienThiSanPhamDto> homeSanPham();
-    List<HienThiSanPhamDto> getSanPhamByIdDanhMuc(Integer idDanhMuc);
-    List<HienThiSanPhamDto> getSanPhamByIdSanPham(Integer idSanPham);
+    List<HienThiSanPhamRes> homeSanPham();
+    List<HienThiSanPhamRes> getSanPhamByIdDanhMuc(Integer idDanhMuc);
+    List<HienThiSanPhamRes> getSanPhamByIdSanPham(Integer idSanPham);
 }

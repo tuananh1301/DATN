@@ -1,7 +1,6 @@
 package datn.com.example.datn.sys.domain.Repository;
 
-import datn.com.example.datn.sys.domain.Dto.HienThiSanPhamDto;
-import datn.com.example.datn.sys.domain.Entity.SanPham;
+import datn.com.example.datn.sys.domain.Dto.Response.HienThiSanPhamRes;
 import datn.com.example.datn.sys.domain.Entity.SanPhamChiTiet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +14,7 @@ import java.util.List;
 public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, Integer> {
 
     @Query("""
-                    SELECT new datn.com.example.datn.sys.domain.Dto.HienThiSanPhamDto(\s
+                    SELECT new datn.com.example.datn.sys.domain.Dto.Response.HienThiSanPhamRes(\s
                         sp.id,
                         sp.tenSanPham,
                         MIN(spct.giaBan) AS giaBan,
@@ -26,10 +25,10 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
                     GROUP BY sp.tenSanPham, ha.duongDanHinhAnh \s
                     order by sp.id desc
         """)
-    List<HienThiSanPhamDto> sanPham();
+    List<HienThiSanPhamRes> sanPham();
 
     @Query("""
-                    SELECT new datn.com.example.datn.sys.domain.Dto.HienThiSanPhamDto(\s
+                    SELECT new datn.com.example.datn.sys.domain.Dto.Response.HienThiSanPhamRes(\s
                         sp.id,
                         sp.tenSanPham,
                         MIN(spct.giaBan) AS giaBan,
@@ -42,6 +41,6 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
                     GROUP BY sp.tenSanPham, ha.duongDanHinhAnh \s
                     order by sp.id desc
         """)
-    List<HienThiSanPhamDto> sanPhamByIdDanhMuc(@Param("idDanhMuc") Integer idDanhMuc);
+    List<HienThiSanPhamRes> sanPhamByIdDanhMuc(@Param("idDanhMuc") Integer idDanhMuc);
 
 }

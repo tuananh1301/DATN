@@ -1,4 +1,4 @@
-package datn.com.example.datn.sys.domain.Dto;
+package datn.com.example.datn.sys.domain.Dto.Response;
 
 import datn.com.example.datn.sys.domain.Entity.KichThuoc;
 import datn.com.example.datn.sys.domain.Entity.MauSac;
@@ -11,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SanPhamChiTietDto {
+public class SanPhamChiTietRest {
     Integer id;
     SanPham sanPham;
     KichThuoc kichThuoc;

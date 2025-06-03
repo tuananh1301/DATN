@@ -1,6 +1,6 @@
 package datn.com.example.datn.sys.domain.Service.ServiceImpl;
 
-import datn.com.example.datn.sys.domain.Dto.HienThiSanPhamDto;
+import datn.com.example.datn.sys.domain.Dto.Response.HienThiSanPhamRes;
 import datn.com.example.datn.sys.domain.Repository.SanPhamChiTietRepository;
 import datn.com.example.datn.sys.domain.Service.SanPhamChiTietService;
 import lombok.AccessLevel;
@@ -18,17 +18,17 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     SanPhamChiTietRepository sanPhamChiTietRepository;
 
     @Override
-    public List<HienThiSanPhamDto> homeSanPham() {
+    public List<HienThiSanPhamRes> homeSanPham() {
         return sanPhamChiTietRepository.sanPham();
     }
 
     @Override
-    public List<HienThiSanPhamDto> getSanPhamByIdDanhMuc(Integer idDanhMuc) {
+    public List<HienThiSanPhamRes> getSanPhamByIdDanhMuc(Integer idDanhMuc) {
         return sanPhamChiTietRepository.sanPhamByIdDanhMuc(idDanhMuc);
     }
 
     @Override
-    public List<HienThiSanPhamDto> getSanPhamByIdSanPham(Integer idSanPham) {
+    public List<HienThiSanPhamRes> getSanPhamByIdSanPham(Integer idSanPham) {
         return List.of();
     }
 
