@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -14,6 +16,7 @@ import java.time.Instant;
 public class NhanVien {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Size(max = 100)
@@ -32,7 +35,7 @@ public class NhanVien {
     private Boolean gioiTinh;
 
     @Column(name = "ngay_sinh")
-    private Instant ngaySinh;
+    private LocalDate ngaySinh;
 
     @Column(name = "trang_thai")
     private Boolean trangThai;

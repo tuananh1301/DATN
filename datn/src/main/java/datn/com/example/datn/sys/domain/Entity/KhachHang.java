@@ -8,6 +8,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -27,7 +29,7 @@ public class KhachHang {
     private Boolean gioiTinh;
 
     @Column(name = "ngay_sinh")
-    private Instant ngaySinh;
+    private LocalDate ngaySinh;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
