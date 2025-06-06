@@ -23,4 +23,7 @@ public interface AuthenticationService {
     AuthenticationRes refreshToken(RefreshReq request) throws ParseException, JOSEException;
     void logout(LogoutReq request) throws ParseException, JOSEException;
     IntrospectRes introspect(IntrospectReq request) throws ParseException, JOSEException;
+    AuthenticationRes outboundAuthentication(String code);
+
+
 }

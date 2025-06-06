@@ -43,8 +43,8 @@ public class NguoiDung {
     String email;
 
     @Size(max = 50)
-    @Column(name = "vai_tro", length = 50)
-    Set<String> vaiTro;
+    @ManyToMany
+    Set<VaiTro> vaiTro;
 
     @Column(name = "trang_thai")
     Boolean trangThai;

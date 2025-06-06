@@ -4,14 +4,17 @@ import datn.com.example.datn.common.enums.Role;
 import datn.com.example.datn.exception.AppException;
 import datn.com.example.datn.exception.ErrorCode;
 import datn.com.example.datn.sys.domain.Dto.Request.NguoiDungReq;
+import datn.com.example.datn.sys.domain.Dto.Request.NguoiDungUpdateRequest;
 import datn.com.example.datn.sys.domain.Dto.Response.NguoiDungRes;
 import datn.com.example.datn.sys.domain.Entity.KhachHang;
 import datn.com.example.datn.sys.domain.Entity.NguoiDung;
 import datn.com.example.datn.sys.domain.Entity.NhanVien;
+import datn.com.example.datn.sys.domain.Entity.VaiTro;
 import datn.com.example.datn.sys.domain.Mapper.NguoiDungMapper;
 import datn.com.example.datn.sys.domain.Repository.KhachHangRepository;
 import datn.com.example.datn.sys.domain.Repository.NguoiDungRepository;
 import datn.com.example.datn.sys.domain.Repository.NhanVienRepository;
+import datn.com.example.datn.sys.domain.Repository.VaiTroRepository;
 import datn.com.example.datn.sys.domain.Service.NguoiDungService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +35,8 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     NhanVienRepository nhanVienRepository;
     NguoiDungRepository nguoiDungRepository;
     NguoiDungMapper nguoiDungMapper;
+    PasswordEncoder passwordEncoder;
+    VaiTroRepository vaiTroRepository;
     @Override
     public NguoiDungRes createCustomer(NguoiDungReq nguoiDungReq) {
         NguoiDung nguoiDung = nguoiDungMapper.toNguoiDung(nguoiDungReq);
@@ -38,7 +44,7 @@ public class NguoiDungServiceImpl implements NguoiDungService {
         nguoiDung.setMatKhau(passwordEncoder.encode(nguoiDung.getMatKhau()));
         HashSet<String> roles = new HashSet<>();
         roles.add(Role.CUSTOMER.toString());
-        nguoiDung.setVaiTro(roles);
+//        nguoiDung.setVaiTro(roles);
         nguoiDung.setNgayTao(Instant.now());
         try {
             nguoiDungRepository.save(nguoiDung);
@@ -64,7 +70,7 @@ public class NguoiDungServiceImpl implements NguoiDungService {
         nguoiDung.setMatKhau(passwordEncoder.encode(nguoiDung.getMatKhau()));
         HashSet<String> roles = new HashSet<>();
         roles.add(Role.STAFF.toString());
-        nguoiDung.setVaiTro(roles);
+//        nguoiDung.setVaiTro(roles);
         try {
             nguoiDungRepository.save(nguoiDung);
             NhanVien nhanVien = new NhanVien();
@@ -79,5 +85,16 @@ public class NguoiDungServiceImpl implements NguoiDungService {
             throw new RuntimeException(e);
         }
         return nguoiDungMapper.toNguoiDungDto(nguoiDung);
+    }
+
+    @Override
+    public NguoiDungRes updateCustomer(Integer id, NguoiDungUpdateRequest nguoiDungUpdateRequest) {
+        NguoiDung nguoiDung = nguoiDungRepository.findById(id).orElseThrow(() ->
+                new AppException(ErrorCode.USER_NOT_EXISTS));
+        nguoiDungMapper.toUpdateNguoiDung(nguoiDung, nguoiDungUpdateRequest);
+        nguoiDung.setMatKhau(passwordEncoder.encode(nguoiDung.getMatKhau()));
+        var vaiTro = vaiTroRepository.findAllById(nguoiDungUpdateRequest.getVaiTro());
+        nguoiDung.setVaiTro(new HashSet<>(vaiTro));
+        return nguoiDungMapper.toNguoiDungDto(nguoiDungRepository.save(nguoiDung));
     }
 }
