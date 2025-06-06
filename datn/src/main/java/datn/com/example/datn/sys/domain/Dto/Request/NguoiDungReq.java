@@ -1,5 +1,6 @@
 package datn.com.example.datn.sys.domain.Dto.Request;
 
+import datn.com.example.datn.sys.domain.Dto.Response.VaiTroRes;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -19,7 +20,7 @@ public class NguoiDungReq {
     Boolean gioiTinh;
     String soDienThoai;
     String email;
-    Set<String> vaiTro;
+    Set<VaiTroRes> vaiTro;
     Boolean trangThai;
     Instant ngayTao;
     Instant ngaySua;

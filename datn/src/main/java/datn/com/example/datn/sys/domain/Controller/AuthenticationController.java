@@ -12,10 +12,7 @@ import datn.com.example.datn.sys.domain.Service.AuthenticationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 
@@ -25,7 +22,13 @@ import java.text.ParseException;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationController {
     AuthenticationService authenticationService;
-
+    @PostMapping("/outbound/authentication")
+    ApiResponse<AuthenticationRes> outboundAuthenticate(
+            @RequestParam("code") String code
+    ){
+        var result = authenticationService.outboundAuthentication(code);
+        return ApiResponse.<AuthenticationRes>builder().result(result).build();
+    }
     @PostMapping("/login")
     ApiResponse<AuthenticationRes> login(@RequestBody AuthenticationReq nguoiDung) {
         var result = authenticationService.authenticate(nguoiDung);
