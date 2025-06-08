@@ -1,21 +1,15 @@
 package datn.com.example.datn.sys.domain.Service.ServiceImpl;
 
-import datn.com.example.datn.common.enums.Role;
 import datn.com.example.datn.exception.AppException;
 import datn.com.example.datn.exception.ErrorCode;
 import datn.com.example.datn.sys.domain.Dto.Request.NguoiDungReq;
 import datn.com.example.datn.sys.domain.Dto.Request.NguoiDungUpdateRequest;
 import datn.com.example.datn.sys.domain.Dto.Response.NguoiDungRes;
-import datn.com.example.datn.sys.domain.Entity.KhachHang;
-import datn.com.example.datn.sys.domain.Entity.NguoiDung;
-import datn.com.example.datn.sys.domain.Entity.NhanVien;
-import datn.com.example.datn.sys.domain.Entity.VaiTro;
+import datn.com.example.datn.sys.domain.Entity.*;
 import datn.com.example.datn.sys.domain.Mapper.NguoiDungMapper;
-import datn.com.example.datn.sys.domain.Repository.KhachHangRepository;
-import datn.com.example.datn.sys.domain.Repository.NguoiDungRepository;
-import datn.com.example.datn.sys.domain.Repository.NhanVienRepository;
-import datn.com.example.datn.sys.domain.Repository.VaiTroRepository;
+import datn.com.example.datn.sys.domain.Repository.*;
 import datn.com.example.datn.sys.domain.Service.NguoiDungService;
+import datn.com.example.datn.sys.domain.constant.PredefinedRole;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,9 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +26,7 @@ import java.util.Set;
 public class NguoiDungServiceImpl implements NguoiDungService {
     KhachHangRepository khachHangRepository;
     NhanVienRepository nhanVienRepository;
+    GioHangRepository gioHangRepository;
     NguoiDungRepository nguoiDungRepository;
     NguoiDungMapper nguoiDungMapper;
     PasswordEncoder passwordEncoder;
@@ -42,10 +36,10 @@ public class NguoiDungServiceImpl implements NguoiDungService {
         NguoiDung nguoiDung = nguoiDungMapper.toNguoiDung(nguoiDungReq);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         nguoiDung.setMatKhau(passwordEncoder.encode(nguoiDung.getMatKhau()));
-        HashSet<String> roles = new HashSet<>();
-        roles.add(Role.CUSTOMER.toString());
-//        nguoiDung.setVaiTro(roles);
-        nguoiDung.setNgayTao(Instant.now());
+        HashSet<VaiTro> vaiTro1 = new HashSet<>();
+        vaiTroRepository.findById(PredefinedRole.CUSTOMER_ROLE).ifPresent(vaiTro1::add);
+        nguoiDung.setVaiTro(vaiTro1);
+        nguoiDung.setNgayTao(LocalDate.now());
         try {
             nguoiDungRepository.save(nguoiDung);
             KhachHang khachHang = new KhachHang();
@@ -56,9 +50,13 @@ public class NguoiDungServiceImpl implements NguoiDungService {
             khachHang.setGioiTinh(nguoiDung.getGioiTinh());
             khachHang.setNgayTao(nguoiDung.getNgayTao());
             khachHangRepository.save(khachHang);
+            GioHang gioHang = new GioHang();
+            gioHang.setIdKhachHang(khachHang);
+            gioHang.setNgayTao(LocalDate.now());
+            gioHangRepository.save(gioHang);
         }
-        catch (Exception e) {
-            throw new RuntimeException(e);
+        catch (AppException e) {
+            throw new AppException(ErrorCode.USER_NOT_EXISTS);
         }
         return nguoiDungMapper.toNguoiDungDto(nguoiDung);
     }
@@ -68,9 +66,9 @@ public class NguoiDungServiceImpl implements NguoiDungService {
         NguoiDung nguoiDung = nguoiDungMapper.toNguoiDung(nguoiDungReq);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         nguoiDung.setMatKhau(passwordEncoder.encode(nguoiDung.getMatKhau()));
-        HashSet<String> roles = new HashSet<>();
-        roles.add(Role.STAFF.toString());
-//        nguoiDung.setVaiTro(roles);
+        HashSet<VaiTro> vaiTro1 = new HashSet<>();
+        vaiTroRepository.findById(PredefinedRole.STAFF_ROLE).ifPresent(vaiTro1::add);
+        nguoiDung.setVaiTro(vaiTro1);
         try {
             nguoiDungRepository.save(nguoiDung);
             NhanVien nhanVien = new NhanVien();
@@ -81,8 +79,8 @@ public class NguoiDungServiceImpl implements NguoiDungService {
             nhanVien.setGioiTinh(nguoiDung.getGioiTinh());
             nhanVienRepository.save(nhanVien);
         }
-        catch (Exception e) {
-            throw new RuntimeException(e);
+        catch (AppException e) {
+            throw new AppException(ErrorCode.USER_NOT_EXISTS);
         }
         return nguoiDungMapper.toNguoiDungDto(nguoiDung);
     }

@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -24,9 +25,9 @@ public class GioHang {
     private KhachHang idKhachHang;
 
     @Column(name = "ngay_tao")
-    private Instant ngayTao;
+    private LocalDate ngayTao;
 
     @Column(name = "ngay_sua")
-    private Instant ngaySua;
+    private LocalDate ngaySua;
 
 }

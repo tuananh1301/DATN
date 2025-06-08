@@ -21,6 +21,6 @@ public class NguoiDungRes {
     String email;
     Set<VaiTroRes> vaiTro;
     Boolean trangThai;
-    Instant ngayTao;
-    Instant ngaySua;
+    LocalDate ngayTao;
+    LocalDate ngaySua;
 }

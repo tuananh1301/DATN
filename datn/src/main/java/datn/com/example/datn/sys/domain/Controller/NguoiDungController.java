@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("/nguoidung")
+@RequestMapping("/users")
 public class NguoiDungController {
     NguoiDungService nguoiDungService;
 
-    @PostMapping("/addCustomer")
+    @PostMapping("/createCustomer")
     public ApiResponse<NguoiDungRes> createCustomer(@RequestBody NguoiDungReq nguoiDungReq) {
         return ApiResponse.<NguoiDungRes>builder().result(nguoiDungService.createCustomer(nguoiDungReq)).build();
     }
-    @PostMapping("/addStaff")
+    @PostMapping("/createStaff")
     public ApiResponse<NguoiDungRes> createStaff(@RequestBody NguoiDungReq nguoiDungReq) {
         return ApiResponse.<NguoiDungRes>builder().result(nguoiDungService.createStaff(nguoiDungReq)).build();
     }

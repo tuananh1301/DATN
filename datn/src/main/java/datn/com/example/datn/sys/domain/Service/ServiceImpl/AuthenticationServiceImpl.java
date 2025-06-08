@@ -151,7 +151,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         StringJoiner stringJoiner = new StringJoiner(" ");
         if (!CollectionUtils.isEmpty(nguoiDung.getVaiTro()))
             nguoiDung.getVaiTro().forEach(vaitro -> {
-                stringJoiner.add("ROLE_" + vaitro);
+                stringJoiner.add("ROLE_" + vaitro.getName());
             });
         return stringJoiner.toString();
 

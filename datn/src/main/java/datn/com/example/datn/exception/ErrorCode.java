@@ -11,6 +11,7 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(400, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     USER_ALREADY_EXISTS(400, "User Already Exists"),
     USER_NOT_EXISTS(400, "User Not Exists"),
+    ROLE_NOT_EXISTS(400, "Role Not Exists", HttpStatus.NOT_FOUND),
     USER_ALREADY_DELETED(400, "User Already Deleted"),
     USER_ALREADY_UPDATED(400, "User Already Updated"),
     USERNAME_INVALID(400, "Username Invalid"),
