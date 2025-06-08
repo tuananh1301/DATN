@@ -45,8 +45,8 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
     List<HienThiSanPhamRes> sanPhamByIdDanhMuc(@Param("idDanhMuc") Integer idDanhMuc);
 
     @Query("""
-        select spct from SanPhamChiTiet spct where spct.kichThuoc.id = :idKichThuoc 
-                and spct.mauSac.id = :idMauSac and spct.sanPham.id = :idSanPham
+        select spct from SanPhamChiTiet spct where spct.idKichThuoc.id = :idKichThuoc 
+                and spct.idMauSac.id = :idMauSac and spct.sanPham.id = :idSanPham
         """)
     Optional<SanPhamChiTiet> findSanPhamChiTietByKichThuoAndMauSac(@Param("idKichThuoc") Integer idKichThuoc,
                                                                   @Param("idMauSac") Integer idMauSac,

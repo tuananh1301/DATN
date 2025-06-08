@@ -30,11 +30,11 @@ public class SanPhamChiTiet {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_kich_thuoc")
-    private KichThuoc kichThuoc;
+    private KichThuoc idKichThuoc;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_mau_sac")
-    private MauSac mauSac;
+    private MauSac idMauSac;
 
     @Column(name = "so_luong")
     private Integer soLuong;
