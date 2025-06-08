@@ -32,4 +32,9 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
         return List.of();
     }
 
+    @Override
+    public List<HienThiSanPhamRes> themGioHan(Integer idSanPham) {
+        return List.of();
+    }
+
 }

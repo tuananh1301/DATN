@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -20,7 +21,7 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
                         MIN(spct.giaBan) AS giaBan,
                         ha.duongDanHinhAnh )
                     FROM SanPhamChiTiet spct
-                    JOIN SanPham sp ON sp.id = spct.idSanPham.id\s
+                    JOIN SanPham sp ON sp.id = spct.sanPham.id\s
                     JOIN HinhAnh ha on ha.idSanPhamChiTiet.id = spct.id
                     GROUP BY sp.tenSanPham, ha.duongDanHinhAnh \s
                     order by sp.id desc
@@ -34,8 +35,8 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
                         MIN(spct.giaBan) AS giaBan,
                         ha.duongDanHinhAnh )
                     FROM SanPhamChiTiet spct
-                    JOIN SanPham sp ON sp.id = spct.idSanPham.id\s
-                    JOIN DanhMuc dm ON sp.id = sp.idDanhMuc.id\s
+                    JOIN SanPham sp ON sp.id = spct.sanPham.id\s
+                    JOIN DanhMuc dm ON sp.id = sp.danhMuc.id\s
                     JOIN HinhAnh ha on ha.idSanPhamChiTiet.id = spct.id
                     where ha.laHinhChinh = true and dm.id = :idDanhMuc
                     GROUP BY sp.tenSanPham, ha.duongDanHinhAnh \s
@@ -43,4 +44,11 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
         """)
     List<HienThiSanPhamRes> sanPhamByIdDanhMuc(@Param("idDanhMuc") Integer idDanhMuc);
 
+    @Query("""
+        select spct from SanPhamChiTiet spct where spct.kichThuoc.id = :idKichThuoc 
+                and spct.mauSac.id = :idMauSac and spct.sanPham.id = :idSanPham
+        """)
+    Optional<SanPhamChiTiet> findSanPhamChiTietByKichThuoAndMauSac(@Param("idKichThuoc") Integer idKichThuoc,
+                                                                  @Param("idMauSac") Integer idMauSac,
+                                                                   @Param("idSanPham") Integer idSanPham);
 }

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface KhachHangRepository extends JpaRepository<KhachHang, Integer> {
+    KhachHang findByIdNguoiDung_Id(Integer idNguoiDung);
 }

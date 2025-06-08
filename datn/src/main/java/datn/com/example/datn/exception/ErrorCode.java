@@ -22,7 +22,8 @@ public enum ErrorCode {
     KEY_INVALID(404, "Key Invalid", HttpStatus.BAD_REQUEST),
     EXPIRED_TOKEN(401, "Expired Token"),
     FORBIDDEN_TOKEN(403, "Forbidden Token"),
-    UNAUTHORIZED_ERROR(401, "Unauthorized User", HttpStatus.UNAUTHORIZED);
+    UNAUTHORIZED_ERROR(401, "Unauthorized User", HttpStatus.UNAUTHORIZED),
+    NOT_FOUND(404, "Not found", HttpStatus.NOT_FOUND);
 
     private final int code;
     private final String message;

@@ -8,4 +8,5 @@ public interface SanPhamChiTietService {
     List<HienThiSanPhamRes> homeSanPham();
     List<HienThiSanPhamRes> getSanPhamByIdDanhMuc(Integer idDanhMuc);
     List<HienThiSanPhamRes> getSanPhamByIdSanPham(Integer idSanPham);
+    List<HienThiSanPhamRes> themGioHan(Integer idSanPham);
 }
