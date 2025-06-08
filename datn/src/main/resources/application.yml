@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: datn
+  datasource:
+    url: jdbc:mariadb://210.211.101.27:5019/TienSchema1?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: quiPIgINaBLe
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+
+jwt:
+  signerKey: QbX+8UKkMR2hh+MXEJGIHnjfzc435e5L4pSU8ERIR1Bdh7Vj0lnl7WRsV0Cjq4OL
+  valid-duration: 3600
+  refreshable-duration: 36000
+
+server:
+  port: 8080
+  servlet:
+    context-path: /lily-shop
+
+logging:
+  level:
+    org.springframework: INFO
+    com.example: INFO
+security:
+  public-endpoints:
+    - /auth/login
+    - /auth/logout
+    - /auth/refresh
+    - /auth/introspect
+    - /users/createCustomer
+    - /users/createStaff
+outbound:
+  identity:
+    client-id: ""
+    client-secret: ""
+    redirect-uri: "http://localhost:3000/authenticate"
