@@ -34,3 +34,5 @@ security:
     - /auth/introspect
     - /users/createCustomer
     - /users/createStaff
+    - /location/add
+    - /location/get
