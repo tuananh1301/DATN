@@ -16,6 +16,7 @@ import java.util.List;
 public interface GioHangChiTietRepository extends JpaRepository<GioHangChiTiet, Integer> {
     @Query("""
     SELECT new datn.com.example.datn.sys.domain.Dto.Response.GioHangChiTietRes(
+        ghct.id,
         sp.tenSanPham,
         spct.id,
         spct.giaBan,

@@ -11,11 +11,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class GioHangChiTietRes {
-
+    Integer id;
     String tenSanPham;
-
     Integer idSanPhamChiTiet;
-
     Double giaBan;
     Integer soLuongTrongGio;
     Integer soLuongSanPham;

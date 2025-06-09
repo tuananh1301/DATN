@@ -1,19 +1,15 @@
 package datn.com.example.datn.sys.domain.Mapper;
 
 import datn.com.example.datn.sys.domain.Dto.Request.GioHangChiTietReq;
+import datn.com.example.datn.sys.domain.Dto.Request.GioHangChiTietUpdateReq;
 import datn.com.example.datn.sys.domain.Dto.Response.GioHangChiTietRes;
 import datn.com.example.datn.sys.domain.Entity.GioHang;
 import datn.com.example.datn.sys.domain.Entity.GioHangChiTiet;
 import datn.com.example.datn.sys.domain.Entity.SanPhamChiTiet;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface GioHangChiTietMapper {
@@ -25,6 +21,12 @@ public interface GioHangChiTietMapper {
 //    @Mapping(source = "idGioHang", target = "idGioHang",  qualifiedByName = "mapGioHang" )
     @Mapping(target = "idSanPhamChiTiet", qualifiedByName = "mapSPCT")
     GioHangChiTietRes toResponse(GioHangChiTiet entity);
+
+    @Named("mapSPCT")
+    default Integer mapSPCT(SanPhamChiTiet sanPhamChiTiet){
+        return sanPhamChiTiet.getId();
+    }
+
     @Named("mapGioHang1")
     default GioHang mapGioHang1(Integer idGioHang){
         GioHang gioHang = new GioHang();
@@ -41,9 +43,6 @@ public interface GioHangChiTietMapper {
     default Integer mapGioHang(GioHang gioHang){
         return gioHang.getId();
     }
-    @Named("mapSPCT")
-    default Integer mapSPCT(SanPhamChiTiet sanPhamChiTiet){
-        return sanPhamChiTiet.getId();
-    }
+
 
 }
