@@ -18,7 +18,6 @@ public class ChatLieu {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Size(max = 100)
     @Column(name = "ten_chat_lieu", length = 100)
     private String tenChatLieu;
 

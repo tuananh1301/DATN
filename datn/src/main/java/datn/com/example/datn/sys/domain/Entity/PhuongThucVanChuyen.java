@@ -20,7 +20,6 @@ public class PhuongThucVanChuyen {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Size(max = 100)
     @Column(name = "ten_phuong_thuc", length = 100)
     private String tenPhuongThuc;
 

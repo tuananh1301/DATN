@@ -6,7 +6,8 @@ import datn.com.example.datn.sys.domain.Dto.Response.SanPhamChiTietRes;
 import datn.com.example.datn.sys.domain.Entity.SanPhamChiTiet;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BanHangOffService {
-    List<SanPhamChiTietRes> findAllSanPhamChiTietsByMaSanPham(SanPhamChiTietSellOffReq sanPhamChiTietSellOffReq);
+    SanPhamChiTietRes findAllSanPhamChiTietsByMaSanPham(SanPhamChiTietSellOffReq sanPhamChiTietSellOffReq);
 }

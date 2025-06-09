@@ -18,8 +18,8 @@ import java.util.List;
 public class BanHangOffController {
     BanHangOffService banHangOffService;
     @GetMapping("/getSPCT")
-    public ApiResponse<List<SanPhamChiTietRes>> getSPCT(@RequestBody SanPhamChiTietSellOffReq request) {
-        return ApiResponse.<List<SanPhamChiTietRes>>builder()
+    public ApiResponse<SanPhamChiTietRes> getSPCT(@RequestBody SanPhamChiTietSellOffReq request) {
+        return ApiResponse.<SanPhamChiTietRes>builder()
                 .result(banHangOffService.findAllSanPhamChiTietsByMaSanPham(request))
                 .build();
     }

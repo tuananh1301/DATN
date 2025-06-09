@@ -19,15 +19,12 @@ public class NhanVien {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Size(max = 100)
     @Column(name = "ten_nhan_vien", length = 100)
     private String tenNhanVien;
 
-    @Size(max = 50)
     @Column(name = "ma_nhan_vien", length = 50)
     private String maNhanVien;
 
-    @Size(max = 300)
     @Column(name = "dia_chi", length = 300)
     private String diaChi;
 

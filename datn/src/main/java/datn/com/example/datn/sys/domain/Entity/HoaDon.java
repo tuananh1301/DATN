@@ -29,11 +29,9 @@ public class HoaDon {
     @JoinColumn(name = "id_nhan_vien")
     private NhanVien idNhanVien;
 
-    @Size(max = 100)
     @Column(name = "ma_hoa_don", length = 100)
     private String maHoaDon;
 
-    @Size(max = 50)
     @Column(name = "loai_don", length = 50)
     private String loaiDon;
 
@@ -41,11 +39,9 @@ public class HoaDon {
     @Column(name = "ghi_chu")
     private String ghiChu;
 
-    @Size(max = 100)
     @Column(name = "ho_ten_nguoi_nhan", length = 100)
     private String hoTenNguoiNhan;
 
-    @Size(max = 20)
     @Column(name = "so_dien_thoai", length = 20)
     private String soDienThoai;
 
@@ -81,7 +77,6 @@ public class HoaDon {
     @Column(name = "trang_thai")
     private Boolean trangThai;
 
-    @Size(max = 400)
     @Column(name = "dia_chi", length = 400)
     private String diaChi;
 

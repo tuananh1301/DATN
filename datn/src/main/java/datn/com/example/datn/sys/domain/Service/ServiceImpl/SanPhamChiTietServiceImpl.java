@@ -1,6 +1,8 @@
 package datn.com.example.datn.sys.domain.Service.ServiceImpl;
 
 import datn.com.example.datn.sys.domain.Dto.Response.HienThiSanPhamRes;
+import datn.com.example.datn.sys.domain.Dto.Response.SanPhamChiTietRes;
+import datn.com.example.datn.sys.domain.Mapper.SanPhamChiTietMapper;
 import datn.com.example.datn.sys.domain.Repository.SanPhamChiTietRepository;
 import datn.com.example.datn.sys.domain.Service.SanPhamChiTietService;
 import lombok.AccessLevel;
@@ -16,6 +18,7 @@ import java.util.List;
 public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
 
     SanPhamChiTietRepository sanPhamChiTietRepository;
+    SanPhamChiTietMapper sanPhamChiTietMapper;
 
     @Override
     public List<HienThiSanPhamRes> homeSanPham() {
@@ -28,8 +31,8 @@ public class SanPhamChiTietServiceImpl implements SanPhamChiTietService {
     }
 
     @Override
-    public List<HienThiSanPhamRes> getSanPhamByIdSanPham(Integer idSanPham) {
-        return List.of();
+    public List<SanPhamChiTietRes> getSanPhamByIdSanPham(Integer idSanPham) {
+        return sanPhamChiTietRepository.findSanPhamChiTietsByIdSanPham_Id(idSanPham).stream().map(sanPhamChiTietMapper::toSanPhamChiTietRes).toList();
     }
 
     @Override

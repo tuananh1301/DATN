@@ -56,7 +56,9 @@ public interface SanPhamChiTietRepository extends JpaRepository<SanPhamChiTiet, 
         select spct from SanPhamChiTiet spct where spct.idKichThuoc.id = :idKichThuoc 
                 and spct.idMauSac.id = :idMauSac and spct.idSanPham.maSanPham = :maSanPham
         """)
-    List<SanPhamChiTiet> findSanPhamChiTietsByIdSanPham_MaSanPham(@Param("idKichThuoc") Integer idKichThuoc,
+    SanPhamChiTiet findSanPhamChiTietsByIdSanPham_MaSanPham(@Param("idKichThuoc") Integer idKichThuoc,
                                                                   @Param("idMauSac") Integer idMauSac,
                                                                   @Param("maSanPham") String maSanPham);
+
+    List<SanPhamChiTiet> findSanPhamChiTietsByIdSanPham_Id(Integer idSanPham);
 }

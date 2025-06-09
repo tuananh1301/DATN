@@ -18,11 +18,9 @@ public class PhieuGiamGia {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Size(max = 100)
     @Column(name = "ma_giam_gia", length = 100)
     private String maGiamGia;
 
-    @Size(max = 100)
     @Column(name = "ten_phieu", length = 100)
     private String tenPhieu;
 
@@ -30,7 +28,6 @@ public class PhieuGiamGia {
     @Column(name = "mo_ta")
     private String moTa;
 
-    @Size(max = 50)
     @Column(name = "loai_giam", length = 50)
     private String loaiGiam;
 

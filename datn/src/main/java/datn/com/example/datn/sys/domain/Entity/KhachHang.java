@@ -21,7 +21,6 @@ public class KhachHang {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Size(max = 100)
     @Column(name = "ten_khach_hang", length = 100)
     private String tenKhachHang;
 

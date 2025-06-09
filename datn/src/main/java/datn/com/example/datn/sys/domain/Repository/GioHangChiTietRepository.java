@@ -30,7 +30,7 @@ public interface GioHangChiTietRepository extends JpaRepository<GioHangChiTiet, 
     JOIN ghct.idGioHang gh
     JOIN gh.idKhachHang kh
     JOIN ghct.idSanPhamChiTiet spct
-    JOIN spct.sanPham sp
+    JOIN spct.idSanPham sp
     JOIN HinhAnh ha on ha.idSanPhamChiTiet.id = spct.id 
     JOIN spct.idKichThuoc kt
     JOIN spct.idMauSac ms
@@ -49,5 +49,7 @@ public interface GioHangChiTietRepository extends JpaRepository<GioHangChiTiet, 
     int updateGioHangChiTiet(@Param("soLuong") Integer soLuong,
                              @Param("ngaySua") LocalDate ngaySua,
                              @Param("idSanPhamChiTiet") Integer idSanPhamChiTiet);
+
+
 
 }

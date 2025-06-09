@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -18,19 +19,16 @@ public class KichThuoc {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Size(max = 50)
     @Column(name = "ten_kich_thuoc", length = 50)
     private String tenKichThuoc;
 
     @Column(name = "trang_thai")
     private Boolean trangThai;
 
-    @ColumnDefault("current_timestamp()")
     @Column(name = "ngay_tao")
-    private Instant ngayTao;
+    private LocalDate ngayTao;
 
-    @ColumnDefault("current_timestamp()")
     @Column(name = "ngay_sua")
-    private Instant ngaySua;
+    private LocalDate ngaySua;
 
 }

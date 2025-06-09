@@ -30,7 +30,6 @@ public class DiaChi {
     @Column(name = "id_tinh", nullable = false)
     private Integer idTinh;
 
-    @Size(max = 100)
     @NotNull
     @Column(name = "ten_tinh", nullable = false, length = 100)
     private String tenTinh;
@@ -39,22 +38,18 @@ public class DiaChi {
     @Column(name = "id_quan_huyen", nullable = false)
     private Integer idQuanHuyen;
 
-    @Size(max = 100)
     @NotNull
     @Column(name = "ten_quan_huyen", nullable = false, length = 100)
     private String tenQuanHuyen;
 
-    @Size(max = 10)
     @NotNull
     @Column(name = "id_phuong_xa", nullable = false, length = 10)
     private String idPhuongXa;
 
-    @Size(max = 100)
     @NotNull
     @Column(name = "ten_phuong_xa", nullable = false, length = 100)
     private String tenPhuongXa;
 
-    @Size(max = 255)
     @Column(name = "chi_tiet_dia_chi")
     private String chiTietDiaChi;
 
@@ -62,11 +57,9 @@ public class DiaChi {
     @Column(name = "dia_chi_mac_dinh")
     private Boolean diaChiMacDinh;
 
-    @Size(max = 20)
     @Column(name = "so_dien_thoai", length = 20)
     private String soDienThoai;
 
-    @Size(max = 250)
     @Column(name = "email", length = 250)
     private String email;
 

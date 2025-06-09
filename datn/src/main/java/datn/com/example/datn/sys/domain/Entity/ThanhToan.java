@@ -40,7 +40,6 @@ public class ThanhToan {
     @Column(name = "ngay_sua")
     private Instant ngaySua;
 
-    @Size(max = 100)
     @Column(name = "ten_hinh_thuc_thanh_toan", length = 100)
     private String tenHinhThucThanhToan;
 
