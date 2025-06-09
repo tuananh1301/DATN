@@ -1,5 +1,8 @@
 package datn.com.example.datn.sys.domain.Dto.Request;
 
+import datn.com.example.datn.sys.domain.Dto.Response.KichThuocRes;
+import datn.com.example.datn.sys.domain.Dto.Response.MauSacRes;
+import datn.com.example.datn.sys.domain.Dto.Response.SanPhamRes;
 import datn.com.example.datn.sys.domain.Entity.KichThuoc;
 import datn.com.example.datn.sys.domain.Entity.MauSac;
 import datn.com.example.datn.sys.domain.Entity.SanPham;
@@ -12,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SanPhamChiTietReq {
-    Integer id;
-    Integer soLuong;
-    Double giaBan;
+    String maSanPham;
+    Integer idKichThuoc;
+    Integer idMauSac;
 }

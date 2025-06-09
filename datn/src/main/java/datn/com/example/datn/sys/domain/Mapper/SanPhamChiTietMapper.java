@@ -13,6 +13,5 @@ import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface SanPhamChiTietMapper {
-    SanPhamChiTiet toSanPhamChiTiet(SanPhamChiTietReq sanPhamChiTietReq);
     SanPhamChiTietRes toSanPhamChiTietRes(SanPhamChiTiet sanPhamChiTiet);
 }

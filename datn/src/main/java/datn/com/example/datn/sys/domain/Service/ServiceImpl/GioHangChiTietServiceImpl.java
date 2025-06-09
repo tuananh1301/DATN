@@ -3,11 +3,12 @@ package datn.com.example.datn.sys.domain.Service.ServiceImpl;
 import datn.com.example.datn.exception.AppException;
 import datn.com.example.datn.exception.ErrorCode;
 import datn.com.example.datn.sys.domain.Dto.Request.GioHangChiTietReq;
-import datn.com.example.datn.sys.domain.Dto.Response.GioHangChiTietRes;
-import datn.com.example.datn.sys.domain.Dto.Response.GioHangRes;
+import datn.com.example.datn.sys.domain.Dto.Request.GioHangChiTietUpdateReq;
+import datn.com.example.datn.sys.domain.Dto.Request.SanPhamChiTietReq;
 import datn.com.example.datn.sys.domain.Entity.GioHang;
 import datn.com.example.datn.sys.domain.Entity.GioHangChiTiet;
 import datn.com.example.datn.sys.domain.Entity.KhachHang;
+import datn.com.example.datn.sys.domain.Entity.SanPhamChiTiet;
 import datn.com.example.datn.sys.domain.Mapper.GioHangChiTietMapper;
 import datn.com.example.datn.sys.domain.Repository.GioHangChiTietRepository;
 import datn.com.example.datn.sys.domain.Repository.GioHangRepository;
@@ -24,8 +25,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -70,9 +71,29 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         gioHangChiTietRepository.save(gioHangChiTiet);
         return true;
     }
-
     @Override
-    public Boolean updateGioHangChiTiet(GioHangChiTietReq req) {
-        return null;
+    public Boolean updateGioHangChiTiet(Integer idGioHang, Integer idGioHangChiTiet, SanPhamChiTietReq req) {
+        SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.findSanPhamChiTietsByIdSanPham_MaSanPham(req.getIdKichThuoc(), req.getIdMauSac(), req.getMaSanPham());
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findById(idGioHangChiTiet).orElseThrow(()
+                -> new AppException(ErrorCode.NOT_FOUND));
+        Optional<GioHangChiTiet> ghct = gioHangChiTietRepository.findByIdGioHang_IdAndIdSanPhamChiTiet_Id(idGioHang, sanPhamChiTiet.getId());
+        if(ghct.isPresent()) {
+            GioHangChiTiet ghct1 = ghct.get();
+            ghct1.setNgaySua(LocalDate.now());
+            ghct1.setSoLuong(ghct1.getSoLuong() + gioHangChiTiet.getSoLuong());
+            gioHangChiTietRepository.save(ghct1);
+            gioHangChiTietRepository.deleteById(idGioHangChiTiet);
+            return true;
+        }
+        else {
+            gioHangChiTiet.setIdSanPhamChiTiet(sanPhamChiTiet);
+            gioHangChiTiet.setNgaySua(LocalDate.now());
+            gioHangChiTietRepository.save(gioHangChiTiet);
+            return true;
+        }
+    }
+    @Override
+    public void deleteGioHangChiTiet(Integer idGioHangChiTiet) {
+        gioHangChiTietRepository.deleteById(idGioHangChiTiet);
     }
 }
