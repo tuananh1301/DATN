@@ -4,6 +4,7 @@ import datn.com.example.datn.exception.AppException;
 import datn.com.example.datn.exception.ErrorCode;
 import datn.com.example.datn.sys.domain.Dto.Request.GioHangChiTietReq;
 import datn.com.example.datn.sys.domain.Dto.Response.GioHangChiTietRes;
+import datn.com.example.datn.sys.domain.Dto.Response.GioHangRes;
 import datn.com.example.datn.sys.domain.Entity.GioHang;
 import datn.com.example.datn.sys.domain.Entity.GioHangChiTiet;
 import datn.com.example.datn.sys.domain.Entity.KhachHang;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -54,5 +56,10 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         gioHangChiTiet.setIdGioHang(gioHang);
         gioHangChiTiet.setIdSanPhamChiTiet(sanPhamChiTiet);
         return gioHangChiTietMapper.toResponse(gioHangChiTietRepository.save(gioHangChiTiet));
+    }
+
+    @Override
+    public List<GioHangRes> findGioHangByIdNguoiDung(Integer idNguoiDung) {
+        return List.of();
     }
 }

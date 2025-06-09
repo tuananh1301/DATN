@@ -22,7 +22,7 @@ public interface GioHangChiTietMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "ngaySua", ignore = true)
     GioHangChiTiet toEntity(GioHangChiTietReq req);
-    @Mapping(target = "idGioHang", source = "idGioHang", qualifiedByName = "mapGioHang" )
+//    @Mapping(target = "idGioHang", source = "idGioHang", qualifiedByName = "mapGioHang" )
     @Mapping(target = "idSanPhamChiTiet", qualifiedByName = "mapSPCT")
     GioHangChiTietRes toResponse(GioHangChiTiet entity);
     @Named("mapGioHang1")

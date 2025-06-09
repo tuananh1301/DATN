@@ -13,9 +13,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SanPhamChiTietReq {
     Integer id;
-    SanPham sanPham;
-    KichThuoc kichThuoc;
-    MauSac mauSac;
+    Integer idSanPham;
+    Integer idKichThuoc;
+    Integer idMauSac;
     Integer soLuong;
     Double giaBan;
 }

@@ -11,11 +11,11 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SanPhamChiTietRest {
+public class SanPhamChiTietRes {
     Integer id;
-    SanPham sanPham;
-    KichThuoc kichThuoc;
-    MauSac mauSac;
+    Integer idSanPham;
+    Integer idKichThuoc;
+    Integer idMauSac;
     Integer soLuong;
     Double giaBan;
 }
