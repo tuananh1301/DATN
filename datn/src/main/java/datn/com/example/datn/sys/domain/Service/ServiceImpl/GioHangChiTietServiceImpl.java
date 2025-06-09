@@ -14,6 +14,7 @@ import datn.com.example.datn.sys.domain.Repository.GioHangRepository;
 import datn.com.example.datn.sys.domain.Repository.KhachHangRepository;
 import datn.com.example.datn.sys.domain.Repository.SanPhamChiTietRepository;
 import datn.com.example.datn.sys.domain.Service.GioHangChiTietService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -41,25 +42,37 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     GioHangChiTietMapper gioHangChiTietMapper;
 
     @Override
-    public GioHangChiTietRes addGioHangChiTiet(GioHangChiTietReq req) {
+    @Transactional
+    public Boolean addGioHangChiTiet(GioHangChiTietReq req) {
         GioHangChiTiet gioHangChiTiet = gioHangChiTietMapper.toEntity(req);
         var sanPhamChiTiet = sanPhamChiTietRepository.findSanPhamChiTietByKichThuoAndMauSac(req.getIdKichThuoc(), req.getIdMauSac(), req.getIdSanPham())
                 .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Jwt jwt = (Jwt) auth.getPrincipal();
         Integer idNguoiDung = ((Long) jwt.getClaim("idNguoiDung")).intValue();
-        System.out.println(idNguoiDung);
         KhachHang khachHang = khachHangRepository.findByIdNguoiDung_Id(idNguoiDung);
         GioHang gioHang = gioHangRepository.findByIdKhachHang_Id(khachHang.getId())
                 .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
+        List<GioHangChiTiet> ghct = gioHangChiTietRepository.findGioHangChiTietsByIdGioHang_Id(gioHang.getId());
+        for (GioHangChiTiet ghc : ghct) {
+            if (ghc.getIdSanPhamChiTiet().getId().equals(sanPhamChiTiet.getId())) {
+                if (sanPhamChiTiet.getSoLuong()<req.getSoLuong() + ghc.getSoLuong()) {
+                    throw new AppException(ErrorCode.OUT_OF_QUANTITY);
+                }else {
+                    gioHangChiTietRepository.updateGioHangChiTiet(req.getSoLuong(),LocalDate.now(),sanPhamChiTiet.getId());
+                    return true;
+                }
+            }
+        }
         gioHangChiTiet.setNgayTao(LocalDate.now());
         gioHangChiTiet.setIdGioHang(gioHang);
         gioHangChiTiet.setIdSanPhamChiTiet(sanPhamChiTiet);
-        return gioHangChiTietMapper.toResponse(gioHangChiTietRepository.save(gioHangChiTiet));
+        gioHangChiTietRepository.save(gioHangChiTiet);
+        return true;
     }
 
     @Override
-    public List<GioHangRes> findGioHangByIdNguoiDung(Integer idNguoiDung) {
-        return List.of();
+    public Boolean updateGioHangChiTiet(GioHangChiTietReq req) {
+        return null;
     }
 }

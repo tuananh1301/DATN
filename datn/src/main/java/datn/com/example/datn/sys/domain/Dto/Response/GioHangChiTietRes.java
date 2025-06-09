@@ -24,5 +24,4 @@ public class GioHangChiTietRes {
     String tenMauSac;
     String duongDanHinhAnh;
 
-    LocalDate ngayTao;
 }
