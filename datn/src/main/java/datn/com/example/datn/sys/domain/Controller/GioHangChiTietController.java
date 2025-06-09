@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 public class GioHangChiTietController {
     GioHangChiTietService gioHangChiTietService;
 
-    @PutMapping("/{id}")
-    public ApiResponse<Boolean> update(@RequestBody SanPhamChiTietReq req, @PathVariable Integer id) {
+    @PutMapping("/{idGioHang}/{idSanPhamChiTiet}")
+    public ApiResponse<Boolean> update(@RequestBody SanPhamChiTietReq req, @PathVariable Integer idGioHang, @PathVariable Integer idSanPhamChiTiet) {
         return ApiResponse.<Boolean>builder()
-                .result(gioHangChiTietService.updateGioHangChiTiet(id, req))
+                .result(gioHangChiTietService.updateGioHangChiTiet(idGioHang, idSanPhamChiTiet, req))
                 .build();
     }
     @DeleteMapping("/deleteGioHangChiTiet/{id}")

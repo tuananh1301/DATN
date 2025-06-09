@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -70,16 +71,27 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
         gioHangChiTietRepository.save(gioHangChiTiet);
         return true;
     }
-
     @Override
-    public Boolean updateGioHangChiTiet(Integer idGioHangChiTiet, SanPhamChiTietReq req) {
+    public Boolean updateGioHangChiTiet(Integer idGioHang, Integer idGioHangChiTiet, SanPhamChiTietReq req) {
         SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepository.findSanPhamChiTietsByIdSanPham_MaSanPham(req.getIdKichThuoc(), req.getIdMauSac(), req.getMaSanPham());
-        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findById(idGioHangChiTiet).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
-        gioHangChiTiet.setIdSanPhamChiTiet(sanPhamChiTiet);
-        gioHangChiTietRepository.save(gioHangChiTiet);
-        return true;
+        GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findById(idGioHangChiTiet).orElseThrow(()
+                -> new AppException(ErrorCode.NOT_FOUND));
+        Optional<GioHangChiTiet> ghct = gioHangChiTietRepository.findByIdGioHang_IdAndIdSanPhamChiTiet_Id(idGioHang, sanPhamChiTiet.getId());
+        if(ghct.isPresent()) {
+            GioHangChiTiet ghct1 = ghct.get();
+            ghct1.setNgaySua(LocalDate.now());
+            ghct1.setSoLuong(ghct1.getSoLuong() + gioHangChiTiet.getSoLuong());
+            gioHangChiTietRepository.save(ghct1);
+            gioHangChiTietRepository.deleteById(idGioHangChiTiet);
+            return true;
+        }
+        else {
+            gioHangChiTiet.setIdSanPhamChiTiet(sanPhamChiTiet);
+            gioHangChiTiet.setNgaySua(LocalDate.now());
+            gioHangChiTietRepository.save(gioHangChiTiet);
+            return true;
+        }
     }
-
     @Override
     public void deleteGioHangChiTiet(Integer idGioHangChiTiet) {
         gioHangChiTietRepository.deleteById(idGioHangChiTiet);

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface GioHangChiTietRepository extends JpaRepository<GioHangChiTiet, Integer> {
@@ -50,6 +51,8 @@ public interface GioHangChiTietRepository extends JpaRepository<GioHangChiTiet, 
     int updateGioHangChiTiet(@Param("soLuong") Integer soLuong,
                              @Param("ngaySua") LocalDate ngaySua,
                              @Param("idSanPhamChiTiet") Integer idSanPhamChiTiet);
+
+    Optional<GioHangChiTiet> findByIdGioHang_IdAndIdSanPhamChiTiet_Id(Integer idGioHang, Integer idSanPhamChiTiet);
 
 
 
