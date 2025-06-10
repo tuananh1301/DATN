@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -38,12 +39,10 @@ public class HoaDonChiTiet {
     @Column(name = "trang_thai")
     private Boolean trangThai;
 
-    @ColumnDefault("current_timestamp()")
     @Column(name = "ngay_tao")
-    private Instant ngayTao;
+    private LocalDate ngayTao;
 
-    @ColumnDefault("current_timestamp()")
     @Column(name = "ngay_sua")
-    private Instant ngaySua;
+    private LocalDate ngaySua;
 
 }

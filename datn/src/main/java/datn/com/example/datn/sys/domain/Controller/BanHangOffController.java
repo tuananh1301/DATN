@@ -1,8 +1,13 @@
 package datn.com.example.datn.sys.domain.Controller;
 
+import datn.com.example.datn.sys.domain.Dto.Request.HoaDonChiTietReq;
+import datn.com.example.datn.sys.domain.Dto.Request.HoaDonReq;
 import datn.com.example.datn.sys.domain.Dto.Request.SanPhamChiTietSellOffReq;
 import datn.com.example.datn.sys.domain.Dto.Response.ApiResponse;
+import datn.com.example.datn.sys.domain.Dto.Response.HoaDonChiTietRes;
+import datn.com.example.datn.sys.domain.Dto.Response.HoaDonRes;
 import datn.com.example.datn.sys.domain.Dto.Response.SanPhamChiTietRes;
+import datn.com.example.datn.sys.domain.Entity.HoaDon;
 import datn.com.example.datn.sys.domain.Service.BanHangOffService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -20,5 +25,15 @@ public class BanHangOffController {
         return ApiResponse.<SanPhamChiTietRes>builder()
                 .result(banHangOffService.findAllSanPhamChiTietsByMaSanPham(request))
                 .build();
+    }
+    @PostMapping("/createHoaDon")
+    public ApiResponse<HoaDonRes> createHoaDon(@RequestBody HoaDonReq req) {
+        var result = banHangOffService.createHoaDon(req);
+        return ApiResponse.<HoaDonRes>builder().result(result).build();
+    }
+    @PostMapping("/createHoaDonChiTiet")
+    public ApiResponse<HoaDonChiTietRes> createHoaDonChiTiet(@RequestBody HoaDonChiTietReq req) {
+        var result = banHangOffService.createHoaDonChiTiet(req);
+        return ApiResponse.<HoaDonChiTietRes>builder().result(result).build();
     }
 }
