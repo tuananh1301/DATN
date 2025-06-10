@@ -37,14 +37,6 @@ public class SanPhamChiTiet {
     @JoinColumn(name = "id_mau_sac")
     private MauSac idMauSac;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_kich_thuoc")
-    private KichThuoc kichThuoc;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_mau_sac")
-    private MauSac mauSac;
-
     @Column(name = "so_luong")
     private Integer soLuong;
 
