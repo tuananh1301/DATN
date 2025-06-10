@@ -38,14 +38,21 @@ public class NguoiDung {
     @Column(name = "email", length = 250)
     String email;
 
-    @Column(name = "vai_tro", length = 50)
-    Set<String> vaiTro;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "nguoi_dung_vai_tro",
+            joinColumns = @JoinColumn(name = "nguoi_dung_id"),
+            inverseJoinColumns = @JoinColumn(name = "vai_tro_name"))
+    Set<VaiTro> vaiTro;
 
     @Column(name = "trang_thai")
     Boolean trangThai;
 
     @Column(name = "ngay_tao")
-    Instant ngayTao;
+    LocalDate ngayTao;
+
+    @Column(name = "ngay_sua")
+    LocalDate ngaySua;
 
     @Column(name = "ngay_sinh")
     LocalDate ngaySinh;

@@ -1,13 +1,10 @@
 package datn.com.example.datn.sys.domain.Entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
-import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -44,20 +41,18 @@ public class PhieuGiamGia {
     private Integer soLuong;
 
     @Column(name = "ngay_bat_dau")
-    private Instant ngayBatDau;
+    private LocalDate ngayBatDau;
 
     @Column(name = "ngay_ket_thuc")
-    private Instant ngayKetThuc;
+    private LocalDate ngayKetThuc;
 
     @Column(name = "trang_thai")
     private Boolean trangThai;
 
-    @ColumnDefault("current_timestamp()")
     @Column(name = "ngay_tao")
-    private Instant ngayTao;
+    private LocalDate ngayTao;
 
-    @ColumnDefault("current_timestamp()")
     @Column(name = "ngay_sua")
-    private Instant ngaySua;
+    private LocalDate ngaySua;
 
 }

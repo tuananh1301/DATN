@@ -39,9 +39,8 @@ public class KhachHang {
     private Boolean trangThai;
 
     @Column(name = "ngay_tao")
-    private Instant ngayTao;
+    private LocalDate ngayTao;
 
     @Column(name = "ngay_sua")
-    private Instant ngaySua;
-
+    private LocalDate ngaySua;
 }

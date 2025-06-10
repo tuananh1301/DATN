@@ -19,8 +19,8 @@ public class NguoiDungRes {
     Boolean gioiTinh;
     String soDienThoai;
     String email;
-    Set<String> vaiTro;
+    Set<VaiTroRes> vaiTro;
     Boolean trangThai;
-    Instant ngayTao;
-    Instant ngaySua;
+    LocalDate ngayTao;
+    LocalDate ngaySua;
 }

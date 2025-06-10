@@ -10,7 +10,6 @@ import datn.com.example.datn.sys.domain.Dto.Response.AuthenticationRes;
 
 import datn.com.example.datn.sys.domain.Dto.Response.IntrospectRes;
 import datn.com.example.datn.sys.domain.Entity.NguoiDung;
-import org.apache.catalina.User;
 
 import java.text.ParseException;
 
@@ -23,4 +22,6 @@ public interface AuthenticationService {
     AuthenticationRes refreshToken(RefreshReq request) throws ParseException, JOSEException;
     void logout(LogoutReq request) throws ParseException, JOSEException;
     IntrospectRes introspect(IntrospectReq request) throws ParseException, JOSEException;
+    AuthenticationRes outboundAuthentication(String code);
+
 }

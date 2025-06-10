@@ -34,5 +34,13 @@ security:
     - /auth/introspect
     - /users/createCustomer
     - /users/createStaff
+<<<<<<< HEAD
     - /location/add
     - /location/get
+=======
+outbound:
+  identity:
+    client-id: ""
+    client-secret: ""
+    redirect-uri: "http://localhost:3000/authenticate"
+>>>>>>> origin/ta-dev-security

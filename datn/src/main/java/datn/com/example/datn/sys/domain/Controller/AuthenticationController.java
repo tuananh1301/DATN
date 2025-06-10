@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 
 @RestController
@@ -26,6 +26,13 @@ import java.text.ParseException;
 public class AuthenticationController {
     AuthenticationService authenticationService;
 
+    @PostMapping("/outbound/authentication")
+    ApiResponse<AuthenticationRes> outboundAuthenticate(
+            @RequestParam("code") String code
+    ){
+        var result = authenticationService.outboundAuthentication(code);
+        return ApiResponse.<AuthenticationRes>builder().result(result).build();
+    }
     @PostMapping("/login")
     ApiResponse<AuthenticationRes> login(@RequestBody AuthenticationReq nguoiDung) {
         var result = authenticationService.authenticate(nguoiDung);

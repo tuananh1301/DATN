@@ -2,6 +2,10 @@ package datn.com.example.datn.sys.domain.Dto.Request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import datn.com.example.datn.sys.domain.Dto.Response.VaiTroRes;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.springframework.cglib.core.Local;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -19,8 +23,8 @@ public class NguoiDungReq {
     Boolean gioiTinh;
     String soDienThoai;
     String email;
-    Set<String> vaiTro;
+    Set<VaiTroRes> vaiTro;
     Boolean trangThai;
-    Instant ngayTao;
-    Instant ngaySua;
+    LocalDate ngayTao;
+    LocalDate ngaySua;
 }

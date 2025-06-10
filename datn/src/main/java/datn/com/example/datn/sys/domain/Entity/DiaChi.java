@@ -12,6 +12,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.time.Instant;
 import java.time.LocalDate;
 
+
 @Getter
 @Setter
 @Entity
@@ -67,12 +68,13 @@ public class DiaChi {
     @Column(name = "trang_thai")
     private Boolean trangThai;
 
-    @ColumnDefault("current_timestamp()")
+
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;
 
     @ColumnDefault("current_timestamp()")
     @Column(name = "ngay_sua")
     private LocalDate ngaySua;
+
 
 }

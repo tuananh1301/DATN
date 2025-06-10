@@ -1,6 +1,5 @@
 package datn.com.example.datn.sys.domain.Service.ServiceImpl;
 
-import datn.com.example.datn.common.enums.Role;
 import datn.com.example.datn.exception.AppException;
 import datn.com.example.datn.exception.ErrorCode;
 import datn.com.example.datn.sys.domain.Dto.Request.NguoiDungReq;
@@ -13,6 +12,10 @@ import datn.com.example.datn.sys.domain.Repository.KhachHangRepository;
 import datn.com.example.datn.sys.domain.Repository.NguoiDungRepository;
 import datn.com.example.datn.sys.domain.Repository.NhanVienRepository;
 import datn.com.example.datn.sys.domain.Service.NguoiDungService;
+import datn.com.example.datn.sys.domain.Dto.Request.NguoiDungUpdateRequest;
+import datn.com.example.datn.sys.domain.Entity.*;
+import datn.com.example.datn.sys.domain.Repository.*;
+import datn.com.example.datn.sys.domain.constant.PredefinedRole;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,7 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashSet;
 
 @Service
@@ -31,15 +34,17 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     NhanVienRepository nhanVienRepository;
     NguoiDungRepository nguoiDungRepository;
     NguoiDungMapper nguoiDungMapper;
+    VaiTroRepository vaiTroRepository;
+    PasswordEncoder passwordEncoder;
     @Override
     public NguoiDungRes createCustomer(NguoiDungReq nguoiDungReq) {
         NguoiDung nguoiDung = nguoiDungMapper.toNguoiDung(nguoiDungReq);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         nguoiDung.setMatKhau(passwordEncoder.encode(nguoiDung.getMatKhau()));
-        HashSet<String> roles = new HashSet<>();
-        roles.add(Role.CUSTOMER.toString());
-        nguoiDung.setVaiTro(roles);
-        nguoiDung.setNgayTao(Instant.now());
+        HashSet<VaiTro> vaiTro1 = new HashSet<>();
+        vaiTroRepository.findById(PredefinedRole.CUSTOMER_ROLE).ifPresent(vaiTro1::add);
+        nguoiDung.setVaiTro(vaiTro1);
+        nguoiDung.setNgayTao(LocalDate.now());
         try {
             nguoiDungRepository.save(nguoiDung);
             KhachHang khachHang = new KhachHang();
@@ -51,8 +56,8 @@ public class NguoiDungServiceImpl implements NguoiDungService {
             khachHang.setNgayTao(nguoiDung.getNgayTao());
             khachHangRepository.save(khachHang);
         }
-        catch (Exception e) {
-            throw new RuntimeException(e);
+        catch (AppException e) {
+            throw new AppException(ErrorCode.USER_NOT_EXISTS);
         }
         return nguoiDungMapper.toNguoiDungDto(nguoiDung);
     }
@@ -62,9 +67,9 @@ public class NguoiDungServiceImpl implements NguoiDungService {
         NguoiDung nguoiDung = nguoiDungMapper.toNguoiDung(nguoiDungReq);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         nguoiDung.setMatKhau(passwordEncoder.encode(nguoiDung.getMatKhau()));
-        HashSet<String> roles = new HashSet<>();
-        roles.add(Role.STAFF.toString());
-        nguoiDung.setVaiTro(roles);
+        HashSet<VaiTro> vaiTro1 = new HashSet<>();
+        vaiTroRepository.findById(PredefinedRole.STAFF_ROLE).ifPresent(vaiTro1::add);
+        nguoiDung.setVaiTro(vaiTro1);
         try {
             nguoiDungRepository.save(nguoiDung);
             NhanVien nhanVien = new NhanVien();
@@ -75,9 +80,20 @@ public class NguoiDungServiceImpl implements NguoiDungService {
             nhanVien.setGioiTinh(nguoiDung.getGioiTinh());
             nhanVienRepository.save(nhanVien);
         }
-        catch (Exception e) {
-            throw new RuntimeException(e);
+        catch (AppException e) {
+            throw new AppException(ErrorCode.USER_NOT_EXISTS);
         }
         return nguoiDungMapper.toNguoiDungDto(nguoiDung);
+    }
+
+    @Override
+    public NguoiDungRes updateCustomer(Integer id, NguoiDungUpdateRequest nguoiDungUpdateRequest) {
+        NguoiDung nguoiDung = nguoiDungRepository.findById(id).orElseThrow(() ->
+                new AppException(ErrorCode.USER_NOT_EXISTS));
+        nguoiDungMapper.toUpdateNguoiDung(nguoiDung, nguoiDungUpdateRequest);
+        nguoiDung.setMatKhau(passwordEncoder.encode(nguoiDung.getMatKhau()));
+        var vaiTro = vaiTroRepository.findAllById(nguoiDungUpdateRequest.getVaiTro());
+        nguoiDung.setVaiTro(new HashSet<>(vaiTro));
+        return nguoiDungMapper.toNguoiDungDto(nguoiDungRepository.save(nguoiDung));
     }
 }

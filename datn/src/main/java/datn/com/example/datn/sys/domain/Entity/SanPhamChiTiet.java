@@ -11,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -36,6 +37,14 @@ public class SanPhamChiTiet {
     @JoinColumn(name = "id_mau_sac")
     private MauSac idMauSac;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_kich_thuoc")
+    private KichThuoc kichThuoc;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_mau_sac")
+    private MauSac mauSac;
+
     @Column(name = "so_luong")
     private Integer soLuong;
 
@@ -45,12 +54,10 @@ public class SanPhamChiTiet {
     @Column(name = "trang_thai")
     private Boolean trangThai;
 
-    @ColumnDefault("current_timestamp()")
     @Column(name = "ngay_tao")
-    private Instant ngayTao;
+    private LocalDate ngayTao;
 
-    @ColumnDefault("current_timestamp()")
     @Column(name = "ngay_sua")
-    private Instant ngaySua;
+    private LocalDate ngaySua;
 
 }

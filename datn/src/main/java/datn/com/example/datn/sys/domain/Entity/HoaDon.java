@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -54,20 +55,20 @@ public class HoaDon {
     @JoinColumn(name = "id_phuong_thuc_van_chuyen")
     private PhuongThucVanChuyen idPhuongThucVanChuyen;
 
-    @Column(name = "phi_van_chuyen", precision = 12, scale = 2)
-    private BigDecimal phiVanChuyen;
+    @Column(name = "phi_van_chuyen")
+    private Double phiVanChuyen;
 
-    @Column(name = "tong_tien", precision = 12, scale = 2)
-    private BigDecimal tongTien;
+    @Column(name = "tong_tien")
+    private Double tongTien;
 
     @Column(name = "ngay_tao")
-    private Instant ngayTao;
+    private LocalDate ngayTao;
 
     @Column(name = "ngay_sua")
-    private Instant ngaySua;
+    private LocalDate ngaySua;
 
     @Column(name = "ngay_thanh_toan")
-    private Instant ngayThanhToan;
+    private LocalDate ngayThanhToan;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)

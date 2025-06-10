@@ -6,8 +6,8 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-
 import java.time.LocalDate;
+
 
 @Getter
 @Setter
@@ -36,5 +36,6 @@ public class GioHangChiTiet {
 
     @Column(name = "ngay_sua")
     private LocalDate ngaySua;
+
 
 }

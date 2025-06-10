@@ -1,5 +1,4 @@
 package datn.com.example.datn.sys.domain.Service.ServiceImpl;
-
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -11,6 +10,7 @@ import datn.com.example.datn.sys.domain.Dto.Request.AuthenticationReq;
 import datn.com.example.datn.sys.domain.Dto.Request.IntrospectReq;
 import datn.com.example.datn.sys.domain.Dto.Request.LogoutReq;
 import datn.com.example.datn.sys.domain.Dto.Request.RefreshReq;
+import datn.com.example.datn.sys.domain.Dto.Request.*;
 import datn.com.example.datn.sys.domain.Dto.Response.AuthenticationRes;
 import datn.com.example.datn.sys.domain.Dto.Response.IntrospectRes;
 import datn.com.example.datn.sys.domain.Entity.InvalidatedToken;
@@ -18,25 +18,27 @@ import datn.com.example.datn.sys.domain.Entity.NguoiDung;
 import datn.com.example.datn.sys.domain.Repository.InvalidatedTokenRepository;
 import datn.com.example.datn.sys.domain.Repository.NguoiDungRepository;
 import datn.com.example.datn.sys.domain.Service.AuthenticationService;
+import datn.com.example.datn.sys.domain.Entity.VaiTro;
+import datn.com.example.datn.sys.domain.Repository.httpclient.OutboundIdentityClient;
+import datn.com.example.datn.sys.domain.Repository.httpclient.OutboundUserClient;
+import datn.com.example.datn.sys.domain.constant.PredefinedRole;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
 import java.util.UUID;
-
+import java.util.*;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -44,6 +46,8 @@ import java.util.UUID;
 public class AuthenticationServiceImpl implements AuthenticationService {
     NguoiDungRepository nguoiDungRepository;
     InvalidatedTokenRepository invalidatedTokenRepository;
+    OutboundUserClient outboundUserClient;
+    OutboundIdentityClient outboundIdentityClient;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -56,6 +60,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @NonFinal
     @Value("${jwt.refreshable-duration}")
     protected long REFRESHABLE_DURATION;
+
+    @NonFinal
+    @Value("${outbound.identity.client-id}")
+    protected String CLIENT_ID;
+
+    @NonFinal
+    @Value("${outbound.identity.client-secret}")
+    protected String CLIENT_SECRET;
+
+    @NonFinal
+    @Value("${outbound.identity.redirect-uri}")
+    protected String REDIRECT_URI;
+
+    @NonFinal
+    protected final String GRANT_TYPE = "authorization_code";
 
     @Override
     public String generateToken(NguoiDung nguoiDung) {
@@ -136,7 +155,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public String buildScope(NguoiDung nguoiDung) {
         StringJoiner stringJoiner = new StringJoiner(" ");
         if (!CollectionUtils.isEmpty(nguoiDung.getVaiTro()))
-            nguoiDung.getVaiTro().forEach(stringJoiner::add);
+            nguoiDung.getVaiTro().forEach(vaitro -> {
+                stringJoiner.add("ROLE_" + vaitro.getName());
+            });
         return stringJoiner.toString();
 
     }
@@ -185,5 +206,38 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         return IntrospectRes.builder().valid(isValid).build();
+    }
+
+    @Override
+    public AuthenticationRes outboundAuthentication(String code) {
+        var response = outboundIdentityClient.exchangeToken(ExchangeTokenRequest.builder()
+                .code(code)
+                .clientId(CLIENT_ID)
+                .clientSecret(CLIENT_SECRET)
+                .redirectUri(REDIRECT_URI)
+                .grantType(GRANT_TYPE)
+                .build());
+
+        log.info("TOKEN RESPONSE {}", response);
+
+        var userInfo = outboundUserClient.getUserInfo("json", response.getAccessToken());
+
+        log.info("User Info {}", userInfo);
+        Set<VaiTro> vaiTro = new HashSet<>();
+        vaiTro.add(VaiTro.builder().name(PredefinedRole.CUSTOMER_ROLE).build());
+        var user = nguoiDungRepository.findByTenDangNhap(userInfo.getEmail()).orElseGet(
+                () -> nguoiDungRepository.save(NguoiDung.builder()
+                        .tenDangNhap(userInfo.getEmail())
+                        .vaiTro(vaiTro)
+                        .fullName(userInfo.getName())
+                        .build()));
+
+        var token = generateToken(user);
+        var refreshToken = generateRefreshToken(user);
+
+        return AuthenticationRes.builder()
+                .token(token)
+                .refreshToken(refreshToken)
+                .build();
     }
 }

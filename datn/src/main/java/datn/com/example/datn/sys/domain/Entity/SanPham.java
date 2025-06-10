@@ -1,15 +1,14 @@
 package datn.com.example.datn.sys.domain.Entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
 import java.time.LocalDate;
+
 
 @Getter
 @Setter
@@ -51,5 +50,4 @@ public class SanPham {
 
     @Column(name = "ngay_sua")
     private LocalDate ngaySua;
-
 }
