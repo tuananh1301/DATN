@@ -17,6 +17,8 @@ public interface HoaDonChiTietMapper {
     HoaDonChiTietRes toHoaDonChiTietRes(HoaDonChiTiet hoaDonChiTiet);
     @Mapping(target = "idHoaDon", source = "idHoaDon", qualifiedByName = "mapHoaDon1")
     HoaDonChiTiet toHoaDonCT(HoaDonChiTietRes hoaDonChiTietRes);
+
+
     @Named("mapHoaDon")
     default Integer mapHoaDon(HoaDon hoaDon) {
         return hoaDon.getId();

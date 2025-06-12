@@ -30,6 +30,9 @@ public class KhachHang {
     @Column(name = "ngay_sinh")
     private LocalDate ngaySinh;
 
+    @Column(name = "so_dien_thoai")
+    private String soDienThoai;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_nguoi_dung")

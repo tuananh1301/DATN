@@ -26,10 +26,6 @@ public class ThanhToan {
     @JoinColumn(name = "id_hoa_don")
     private HoaDon idHoaDon;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_hinh_thuc_thanh_toan")
-    private HinhThucThanhToan idHinhThucThanhToan;
-
     @Column(name = "so_tien")
     private Double soTien;
 

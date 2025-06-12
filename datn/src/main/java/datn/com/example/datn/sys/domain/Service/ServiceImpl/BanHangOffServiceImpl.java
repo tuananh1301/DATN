@@ -2,22 +2,18 @@ package datn.com.example.datn.sys.domain.Service.ServiceImpl;
 
 import datn.com.example.datn.exception.AppException;
 import datn.com.example.datn.exception.ErrorCode;
+import datn.com.example.datn.sys.domain.Dto.Request.CheckOutReq;
 import datn.com.example.datn.sys.domain.Dto.Request.HoaDonChiTietReq;
 import datn.com.example.datn.sys.domain.Dto.Request.HoaDonReq;
 import datn.com.example.datn.sys.domain.Dto.Request.SanPhamChiTietSellOffReq;
 import datn.com.example.datn.sys.domain.Dto.Response.HoaDonChiTietRes;
 import datn.com.example.datn.sys.domain.Dto.Response.HoaDonRes;
 import datn.com.example.datn.sys.domain.Dto.Response.SanPhamChiTietRes;
-import datn.com.example.datn.sys.domain.Entity.HoaDon;
-import datn.com.example.datn.sys.domain.Entity.HoaDonChiTiet;
-import datn.com.example.datn.sys.domain.Entity.NhanVien;
+import datn.com.example.datn.sys.domain.Entity.*;
 import datn.com.example.datn.sys.domain.Mapper.HoaDonChiTietMapper;
 import datn.com.example.datn.sys.domain.Mapper.HoaDonMapper;
 import datn.com.example.datn.sys.domain.Mapper.SanPhamChiTietMapper;
-import datn.com.example.datn.sys.domain.Repository.HoaDonChiTietRepository;
-import datn.com.example.datn.sys.domain.Repository.HoaDonRepository;
-import datn.com.example.datn.sys.domain.Repository.NhanVienRepository;
-import datn.com.example.datn.sys.domain.Repository.SanPhamChiTietRepository;
+import datn.com.example.datn.sys.domain.Repository.*;
 import datn.com.example.datn.sys.domain.Service.BanHangOffService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +37,8 @@ public class BanHangOffServiceImpl implements BanHangOffService {
     HoaDonChiTietMapper hoaDonChiTietMapper;
     HoaDonRepository hoaDonRepository;
     HoaDonChiTietRepository hoaDonChiTietRepository;
+    KhachHangRepository khachHangRepository;
+    ThanhToanRepository thanhToanRepository;
     @Override
     public SanPhamChiTietRes findAllSanPhamChiTietsByMaSanPham(SanPhamChiTietSellOffReq sanPhamChiTietReq) {
         return sanPhamChiTietMapper.toSanPhamChiTietRes(sanPhamChiTietRepository.findSanPhamChiTietsByIdSanPham_MaSanPham(sanPhamChiTietReq.getIdKichThuoc(), sanPhamChiTietReq.getIdMauSac(), sanPhamChiTietReq.getMaSanPham()));
@@ -53,24 +51,66 @@ public class BanHangOffServiceImpl implements BanHangOffService {
         Jwt jwt = (Jwt) auth.getPrincipal();
         Integer idNguoiDung = ((Long) jwt.getClaim("idNguoiDung")).intValue();
         NhanVien nv = nhanVienRepository.findByIdNguoiDung_Id(idNguoiDung);
-        System.out.println(nv.getId());
         hoaDon.setIdNhanVien(nv);
         hoaDon.setNgayTao(LocalDate.now());
         String maHoaDon = RandomStringUtils.randomAlphanumeric(8);
-        System.out.println(maHoaDon);
         hoaDon.setMaHoaDon(maHoaDon);
         return hoaDonMapper.toHoaDonRes(hoaDonRepository.save(hoaDon));
     }
 
     @Override
     public HoaDonChiTietRes createHoaDonChiTiet(HoaDonChiTietReq hoaDonChiTietReq) {
-        HoaDonChiTietRes hoaDonChiTietRes = new HoaDonChiTietRes();
-        HoaDon hoaDon = hoaDonRepository.findById(hoaDonChiTietReq.getIdHoaDon()).orElseThrow(() -> new AppException(ErrorCode.BILL_NOT_FOUND));
-        hoaDonChiTietRes.setIdSanPhamChiTiet(hoaDonChiTietReq.getIdSanPhamChiTiet());
-        hoaDonChiTietRes.setIdHoaDon(hoaDon.getId());
-        hoaDonChiTietRes.setNgayTao(LocalDate.now());
-        hoaDonChiTietRes.setTrangThai(true);
-        HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietMapper.toHoaDonCT(hoaDonChiTietRes);
-        return hoaDonChiTietMapper.toHoaDonChiTietRes(hoaDonChiTietRepository.save(hoaDonChiTiet));
+        HoaDonChiTiet hoaDonChiTietMapper1 = hoaDonChiTietMapper.toHoaDonChiTiet(hoaDonChiTietReq);
+        HoaDon hoaDon = hoaDonRepository.findById(hoaDonChiTietReq.getIdHoaDon())
+                .orElseThrow(() -> new AppException(ErrorCode.BILL_NOT_FOUND));
+
+        HoaDonChiTiet checkHoaDonChiTiet = hoaDonChiTietRepository
+                .findByIdSanPhamChiTietAndIdHoaDon_Id(hoaDonChiTietMapper1.getIdSanPhamChiTiet(), hoaDonChiTietReq.getIdHoaDon());
+
+        HoaDonChiTiet hoaDonChiTiet;
+
+        if (checkHoaDonChiTiet != null) {
+            checkHoaDonChiTiet.setSoLuong(checkHoaDonChiTiet.getSoLuong() + 1);
+            checkHoaDonChiTiet.setNgayTao(LocalDate.now());
+            hoaDonChiTiet = hoaDonChiTietRepository.save(checkHoaDonChiTiet);
+        } else {
+            HoaDonChiTietRes hoaDonChiTietRes = new HoaDonChiTietRes();
+            hoaDonChiTietRes.setIdSanPhamChiTiet(hoaDonChiTietReq.getIdSanPhamChiTiet());
+            hoaDonChiTietRes.setIdHoaDon(hoaDon.getId());
+            hoaDonChiTietRes.setNgayTao(LocalDate.now());
+            hoaDonChiTietRes.setTrangThai(true);
+            hoaDonChiTietRes.setDonGia(hoaDonChiTietReq.getDonGia());
+            hoaDonChiTietRes.setSoLuong(1);
+            hoaDonChiTiet = hoaDonChiTietMapper.toHoaDonCT(hoaDonChiTietRes);
+            hoaDonChiTiet = hoaDonChiTietRepository.save(hoaDonChiTiet);
+        }
+
+        return hoaDonChiTietMapper.toHoaDonChiTietRes(hoaDonChiTiet);
+    }
+
+
+    @Override
+    public void checkOut(CheckOutReq checkOutReq) {
+        HoaDon hoaDon = hoaDonRepository.findById(checkOutReq.getIdHoaDon())
+                .orElseThrow(() -> new AppException(ErrorCode.BILL_NOT_FOUND));
+
+        hoaDon.setNgaySua(LocalDate.now());
+        hoaDon.setTongTien(checkOutReq.getTongTien());
+        hoaDon.setNgayThanhToan(LocalDate.now());
+
+        KhachHang khachHang = khachHangRepository.findById(checkOutReq.getIdKhachHang())
+                .orElseThrow(() -> new AppException(ErrorCode.CUSTOMER_NOT_FOUND));
+        hoaDon.setIdKhachHang(khachHang);
+
+        hoaDonRepository.save(hoaDon);
+
+        ThanhToan thanhToan = new ThanhToan();
+        thanhToan.setTenHinhThucThanhToan(checkOutReq.getTenHinhThucThanhToan());
+        thanhToan.setIdHoaDon(hoaDon);
+        thanhToan.setNgayTao(LocalDate.now());
+        thanhToan.setSoTien(checkOutReq.getTongTien());
+        thanhToan.setNgayThanhToan(LocalDate.now());
+
+        thanhToanRepository.save(thanhToan);
     }
 }

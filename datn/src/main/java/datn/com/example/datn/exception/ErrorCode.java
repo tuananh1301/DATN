@@ -29,6 +29,7 @@ public enum ErrorCode {
     CART_DETAIL_NOT_FOUND(404, "Not found cart detail", HttpStatus.NOT_FOUND),
     CART_NOT_FOUND(404, "Not found cart", HttpStatus.NOT_FOUND),
     BILL_NOT_FOUND(404, "Not found cart", HttpStatus.NOT_FOUND),
+    CUSTOMER_NOT_FOUND(404, "Not found CUSTOMER", HttpStatus.NOT_FOUND),
     OUT_OF_QUANTITY(404, "Out of quantity", HttpStatus.BAD_REQUEST);
     private final int code;
     private final String message;
