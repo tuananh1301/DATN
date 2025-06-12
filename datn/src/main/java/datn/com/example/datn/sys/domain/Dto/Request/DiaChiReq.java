@@ -5,14 +5,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DiaChiReq {
-    @NotNull(message = "ID khách hàng không được để trống")
-    Integer idKhachHang;
 
     @NotNull(message = "ID tỉnh không được để trống")
     Integer idTinh;
@@ -40,5 +40,8 @@ public class DiaChiReq {
 
     String email;
 
-    Boolean trangThai;
+    String tenKhachHang;
+
+    LocalDate ngayTao;
+
 }

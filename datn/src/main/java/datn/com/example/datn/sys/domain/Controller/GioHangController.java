@@ -2,7 +2,6 @@ package datn.com.example.datn.sys.domain.Controller;
 
 import datn.com.example.datn.sys.domain.Dto.Request.GioHangChiTietReq;
 import datn.com.example.datn.sys.domain.Dto.Response.ApiResponse;
-import datn.com.example.datn.sys.domain.Dto.Response.GioHangChiTietRes;
 import datn.com.example.datn.sys.domain.Dto.Response.GioHangRes;
 import datn.com.example.datn.sys.domain.Service.GioHangChiTietService;
 import datn.com.example.datn.sys.domain.Service.GioHangService;

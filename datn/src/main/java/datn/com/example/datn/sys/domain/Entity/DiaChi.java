@@ -68,7 +68,6 @@ public class DiaChi {
     @Column(name = "trang_thai")
     private Boolean trangThai;
 
-
     @Column(name = "ngay_tao")
     private LocalDate ngayTao;
 
@@ -76,5 +75,7 @@ public class DiaChi {
     @Column(name = "ngay_sua")
     private LocalDate ngaySua;
 
+    @Column(name = "ten_khach_hang", length = 255)
+    private String tenKhachHang;
 
 }
