@@ -9,6 +9,7 @@ import datn.com.example.datn.sys.domain.Dto.Response.HoaDonRes;
 import datn.com.example.datn.sys.domain.Dto.Response.SanPhamChiTietRes;
 import datn.com.example.datn.sys.domain.Entity.HoaDon;
 import datn.com.example.datn.sys.domain.Service.BanHangOffService;
+import datn.com.example.datn.sys.domain.Service.HoaDonChiTietService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/off/sell")
 public class BanHangOffController {
+
     BanHangOffService banHangOffService;
+    HoaDonChiTietService hoaDonChiTietService;
+
     @GetMapping("/getSPCT")
     public ApiResponse<SanPhamChiTietRes> getSPCT(@RequestBody SanPhamChiTietSellOffReq request) {
         return ApiResponse.<SanPhamChiTietRes>builder()
@@ -35,5 +39,10 @@ public class BanHangOffController {
     public ApiResponse<HoaDonChiTietRes> createHoaDonChiTiet(@RequestBody HoaDonChiTietReq req) {
         var result = banHangOffService.createHoaDonChiTiet(req);
         return ApiResponse.<HoaDonChiTietRes>builder().result(result).build();
+    }
+    @DeleteMapping("/deleteHoaDonChiTiet/{idHoaDonChiTiet}")
+    public ApiResponse<String> deleteHoaDonChiTiet(@PathVariable Integer idHoaDonChiTiet) {
+        hoaDonChiTietService.delete(idHoaDonChiTiet);
+        return ApiResponse.<String>builder().result("Bill has been deleted").build();
     }
 }
