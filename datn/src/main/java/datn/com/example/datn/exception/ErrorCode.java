@@ -20,6 +20,8 @@ public enum ErrorCode {
     SIGNATURE_INVALID(404, "Signature Invalid"),
     EXPIRED_TOKEN(401, "Expired Token"),
     FORBIDDEN_TOKEN(403, "Forbidden Token"),
+    ENTITY_NOT_FOUND(404, "Entity not found", HttpStatus.NOT_FOUND),
+    DELETE_INVALID_STATUS(400, "Chỉ được xóa hóa đơn ở trạng thái pending", HttpStatus.BAD_REQUEST),
     UNAUTHORIZED_ERROR(401, "Unauthorized User", HttpStatus.UNAUTHORIZED);
 
     private final int code;

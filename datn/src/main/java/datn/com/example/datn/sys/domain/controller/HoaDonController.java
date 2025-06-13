@@ -1,7 +1,9 @@
 package datn.com.example.datn.sys.domain.controller;
 
-import datn.com.example.datn.sys.domain.entity.HoaDon;
+import datn.com.example.datn.sys.domain.dto.HoaDonDto;
+import datn.com.example.datn.sys.domain.dto.response.ApiResponse;
 import datn.com.example.datn.sys.domain.service.HoaDonService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,39 +11,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/hoa-don")
+@RequiredArgsConstructor
 public class HoaDonController {
+
     private final HoaDonService service;
 
-    public HoaDonController(HoaDonService service) {
-        this.service = service;
-    }
-
     @GetMapping
-    public ResponseEntity<List<HoaDon>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<ApiResponse<List<HoaDonDto>>> getAll() {
+        return ResponseEntity.ok(ApiResponse.success(service.getAll(), "Lấy danh sách hóa đơn"));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HoaDon> getById(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.getById(id));
+    public ResponseEntity<ApiResponse<HoaDonDto>> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(ApiResponse.success(service.getById(id), "Lấy chi tiết hóa đơn"));
     }
 
     @PostMapping
-    public ResponseEntity<HoaDon> create(@RequestBody HoaDon hoaDon) {
-        return ResponseEntity.ok(service.create(hoaDon));
+    public ResponseEntity<ApiResponse<HoaDonDto>> create(@RequestBody HoaDonDto dto) {
+        return ResponseEntity.ok(ApiResponse.success(service.create(dto), "Tạo mới hóa đơn"));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HoaDon> update(@PathVariable Integer id, @RequestBody HoaDon hoaDon) {
-        return ResponseEntity.ok(service.update(id, hoaDon));
+    public ResponseEntity<ApiResponse<HoaDonDto>> update(@PathVariable Integer id, @RequestBody HoaDonDto dto) {
+        return ResponseEntity.ok(ApiResponse.success(service.update(id, dto), "Cập nhật hóa đơn"));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) {
-        boolean deleted = service.delete(id);
-        if (deleted) {
-            return ResponseEntity.ok("Đã xoá hoá đơn (pending)");
-        }
-        return ResponseEntity.badRequest().body("Không thể xoá hoá đơn đã completed");
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Integer id) {
+        service.delete(id);
+        return ResponseEntity.ok(ApiResponse.success(null, "Xóa hóa đơn thành công"));
     }
 }

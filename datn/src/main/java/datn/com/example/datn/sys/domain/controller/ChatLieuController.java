@@ -1,7 +1,9 @@
 package datn.com.example.datn.sys.domain.controller;
 
-import datn.com.example.datn.sys.domain.entity.ChatLieu;
+import datn.com.example.datn.sys.domain.dto.ChatLieuDto;
+import datn.com.example.datn.sys.domain.dto.response.ApiResponse;
 import datn.com.example.datn.sys.domain.service.ChatLieuService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,41 +11,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/chat-lieu")
+@RequiredArgsConstructor
 public class ChatLieuController {
 
     private final ChatLieuService service;
 
-    public ChatLieuController(ChatLieuService service) {
-        this.service = service;
-    }
-
     @GetMapping
-    public ResponseEntity<List<ChatLieu>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<ApiResponse<List<ChatLieuDto>>> getAll() {
+        return ResponseEntity.ok(ApiResponse.success(service.getAll(), "Lấy danh sách chất liệu"));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ChatLieu> getById(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.getById(id));
+    public ResponseEntity<ApiResponse<ChatLieuDto>> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(ApiResponse.success(service.getById(id), "Lấy chi tiết chất liệu"));
     }
 
     @PostMapping
-    public ResponseEntity<ChatLieu> create(@RequestBody ChatLieu chatLieu) {
-        return ResponseEntity.ok(service.create(chatLieu));
+    public ResponseEntity<ApiResponse<ChatLieuDto>> create(@RequestBody ChatLieuDto dto) {
+        return ResponseEntity.ok(ApiResponse.success(service.create(dto), "Tạo mới chất liệu"));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ChatLieu> update(@PathVariable Integer id, @RequestBody ChatLieu chatLieu) {
-        return ResponseEntity.ok(service.update(id, chatLieu));
+    public ResponseEntity<ApiResponse<ChatLieuDto>> update(@PathVariable Integer id, @RequestBody ChatLieuDto dto) {
+        return ResponseEntity.ok(ApiResponse.success(service.update(id, dto), "Cập nhật chất liệu"));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id) {
-        boolean deleted = service.delete(id);
-        if (deleted) {
-            return ResponseEntity.ok("Xóa thành công");
-        } else {
-            return ResponseEntity.badRequest().body("Không tìm thấy chất liệu để xóa");
-        }
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Integer id) {
+        service.delete(id);
+        return ResponseEntity.ok(ApiResponse.success(null, "Xóa thành công"));
     }
 }

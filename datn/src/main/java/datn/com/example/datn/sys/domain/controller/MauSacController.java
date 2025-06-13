@@ -1,7 +1,9 @@
 package datn.com.example.datn.sys.domain.controller;
 
-import datn.com.example.datn.sys.domain.entity.MauSac;
+import datn.com.example.datn.sys.domain.dto.MauSacDto;
+import datn.com.example.datn.sys.domain.dto.response.ApiResponse;
 import datn.com.example.datn.sys.domain.service.MauSacService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,37 +11,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/mau-sac")
+@RequiredArgsConstructor
 public class MauSacController {
+
     private final MauSacService service;
 
-    public MauSacController(MauSacService service) {
-        this.service = service;
-    }
-
     @GetMapping
-    public ResponseEntity<List<MauSac>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<ApiResponse<List<MauSacDto>>> getAll() {
+        return ResponseEntity.ok(ApiResponse.success(service.getAll(), "Lấy danh sách màu sắc"));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MauSac> getById(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.getById(id));
+    public ResponseEntity<ApiResponse<MauSacDto>> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(ApiResponse.success(service.getById(id), "Lấy chi tiết màu sắc"));
     }
 
     @PostMapping
-    public ResponseEntity<MauSac> create(@RequestBody MauSac mauSac) {
-        return ResponseEntity.ok(service.create(mauSac));
+    public ResponseEntity<ApiResponse<MauSacDto>> create(@RequestBody MauSacDto dto) {
+        return ResponseEntity.ok(ApiResponse.success(service.create(dto), "Tạo mới màu sắc"));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MauSac> update(@PathVariable Integer id, @RequestBody MauSac mauSac) {
-        return ResponseEntity.ok(service.update(id, mauSac));
+    public ResponseEntity<ApiResponse<MauSacDto>> update(@PathVariable Integer id, @RequestBody MauSacDto dto) {
+        return ResponseEntity.ok(ApiResponse.success(service.update(id, dto), "Cập nhật màu sắc"));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) {
-        boolean deleted = service.delete(id);
-        if (deleted) return ResponseEntity.ok("Đã xoá màu sắc");
-        return ResponseEntity.badRequest().body("Không tìm thấy ID cần xoá");
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Integer id) {
+        service.delete(id);
+        return ResponseEntity.ok(ApiResponse.success(null, "Xóa thành công"));
     }
 }

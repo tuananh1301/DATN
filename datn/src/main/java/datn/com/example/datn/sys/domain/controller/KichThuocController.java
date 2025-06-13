@@ -1,7 +1,9 @@
 package datn.com.example.datn.sys.domain.controller;
 
-import datn.com.example.datn.sys.domain.entity.KichThuoc;
+import datn.com.example.datn.sys.domain.dto.KichThuocDto;
+import datn.com.example.datn.sys.domain.dto.response.ApiResponse;
 import datn.com.example.datn.sys.domain.service.KichThuocService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,37 +11,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/kich-thuoc")
+@RequiredArgsConstructor
 public class KichThuocController {
+
     private final KichThuocService service;
 
-    public KichThuocController(KichThuocService service) {
-        this.service = service;
-    }
-
     @GetMapping
-    public ResponseEntity<List<KichThuoc>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<ApiResponse<List<KichThuocDto>>> getAll() {
+        return ResponseEntity.ok(ApiResponse.success(service.getAll(), "Lấy danh sách kích thước"));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<KichThuoc> getById(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.getById(id));
+    public ResponseEntity<ApiResponse<KichThuocDto>> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(ApiResponse.success(service.getById(id), "Lấy chi tiết kích thước"));
     }
 
     @PostMapping
-    public ResponseEntity<KichThuoc> create(@RequestBody KichThuoc kichThuoc) {
-        return ResponseEntity.ok(service.create(kichThuoc));
+    public ResponseEntity<ApiResponse<KichThuocDto>> create(@RequestBody KichThuocDto dto) {
+        return ResponseEntity.ok(ApiResponse.success(service.create(dto), "Tạo mới kích thước"));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<KichThuoc> update(@PathVariable Integer id, @RequestBody KichThuoc kichThuoc) {
-        return ResponseEntity.ok(service.update(id, kichThuoc));
+    public ResponseEntity<ApiResponse<KichThuocDto>> update(@PathVariable Integer id, @RequestBody KichThuocDto dto) {
+        return ResponseEntity.ok(ApiResponse.success(service.update(id, dto), "Cập nhật kích thước"));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) {
-        boolean deleted = service.delete(id);
-        if (deleted) return ResponseEntity.ok("Đã xoá kích thước");
-        return ResponseEntity.badRequest().body("Không tìm thấy ID cần xoá");
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Integer id) {
+        service.delete(id);
+        return ResponseEntity.ok(ApiResponse.success(null, "Xóa thành công"));
     }
 }
